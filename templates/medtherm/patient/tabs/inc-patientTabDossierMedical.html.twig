@@ -1,0 +1,114 @@
+{#
+ # This file is part of MedShakeEHR.
+ #
+ # Copyright (c) 2019
+ # Bertrand Boutillier <b.boutillier@gmail.com>
+ # http://www.medshake.net
+ #
+ # MedShakeEHR is free software: you can redistribute it and/or modify
+ # it under the terms of the GNU General Public License as published by
+ # the Free Software Foundation, either version 3 of the License, or
+ # any later version.
+ #
+ # MedShakeEHR is distributed in the hope that it will be useful,
+ # but WITHOUT ANY WARRANTY; without even the implied warranty of
+ # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ # GNU General Public License for more details.
+ #
+ # You should have received a copy of the GNU General Public License
+ # along with MedShakeEHR.  If not, see <http://www.gnu.org/licenses/>.
+ #/
+
+/##
+ # Template médecine thermale > patient : tab dossier médical
+ #
+ # @author Bertrand Boutillier <b.boutillier@gmail.com>
+ #}
+{% import "macroForm.html.twig" as f %}
+
+{# menu supérieur #}
+{% include('inc-patientTabDossierMedicalMenuSup.html.twig') %}
+
+<div class="row swipable mt-4">
+    <div id="patientLatCol" class="col-md-4 col-xl-3 px-0 pl-md-0 pr-md-3 atcd">
+      {% include('inc-patientLatCol.html.twig') %}
+    </div>
+
+    {# colonne principale #}
+    <div class="col-md-8 col-xl-9 dossier">
+
+      {# Div d'import de nouveau doc #}
+      <div id="newDoc" class="row toclear">{% include 'importDocForm.html.twig' %}</div>
+
+      {# historique du jour #}
+      <div id="historiqueToday" class="row">
+        {% include 'patientHistoriqueToday.html.twig' %}
+      </div>
+
+      {# panel pour affichage erreurs #}
+      {% include 'inc-patientTabDossierMedicalAlerteValidationForm.html.twig' %}
+
+      {# Div d'insertion de nouveau reglement #}
+      <div id="newReglement" class="row toclear"></div>
+
+      {# Div d'insertion de nouveau courrier #}
+      <div id="newCourrier" class="row toclear"></div>
+
+      {# Div d'insertion de nouvelle ordonance #}
+      <div id="newOrdo" class="row toclear"></div>
+
+      {# Div d'insertion de nouvelle consultation #}
+      <div id="nouvelleCs" class="row toclear checkboxFixValue"></div>
+
+      {# Div d'insertion de nouveau mail  #}
+      <div id="newMail" class="row toclear"></div>
+
+      {# Cure en cours #}
+      {% if page.cureEnCours.id > 0 %}
+
+        <div class="row changeObserv" id="synthesecureEnCours">
+          <div class="jumbotron col-12">
+            <a
+              id="closeCure"
+              class="close"
+              aria-label="Close"
+              title="Fermer définitivement cette cure"
+              href="{{ config.protocol }}{{ config.host }}{{ config.urlHostSuffixe }}/module/actions/closeCure/{{ page.patient.id }}/{{ page.cureEnCours.id }}/"
+              style="z-index : 10000">
+              <span aria-hidden="true">&times;</span>
+            </a>
+            <h3 class="font-weight-bold">Cure actuelle</h3>
+
+            {# Formulaire de cure en cours #}
+            {{ f.formbuilder(page.formMedtheCureEnCours ,'medtheCureEnCours' ) }}
+
+            {# Bouton type consultation #}
+            <div class="mt-3 d-flex justify-content-between">
+              <div>
+                {% for v in page.csMedTherm %}
+                  <button type="button" class="btn btn-info btn-sm addNewCS mb-1" data-parentid="{{ page.cureEnCours.id }}" data-formtocall="{{ v.formValues }}" data-csid="{{ v.id }}" data-mode="create"><i class="fas fa-stethoscope"></i> {{ v.label|e }}</button>
+                {% endfor %}
+              </div>
+              <div>
+                {% for v in page.csMedThermAutres %}
+                  <button type="button" class="btn btn-success btn-sm addNewCS mb-1" data-parentid="{{ page.cureEnCours.id }}" data-formtocall="{{ v.formValues }}" data-csid="{{ v.id }}" data-mode="create"><i class="far fa-file"></i> {{ v.label|e }}</button>
+                {% endfor %}
+              </div>
+            </div>
+
+            {% if page.formJavascript.medtheCureEnCours is not empty %}
+              <script>
+                {{ page.formJavascript.medtheCureEnCours }}
+              </script>
+            {% endif %}
+          </div>
+        </div>
+
+      {% endif %}
+
+      {# Historique complet #}
+      <div id="historique" class="row">
+        {% include 'patientHistoriqueMedical.html.twig' %}
+      </div>
+    </div>
+</div>

@@ -1,0 +1,68 @@
+{#
+ # This file is part of MedShakeEHR.
+ #
+ # Copyright (c) 2019
+ # Bertrand Boutillier <b.boutillier@gmail.com>
+ # http://www.medshake.net
+ #
+ # MedShakeEHR is free software: you can redistribute it and/or modify
+ # it under the terms of the GNU General Public License as published by
+ # the Free Software Foundation, either version 3 of the License, or
+ # any later version.
+ #
+ # MedShakeEHR is distributed in the hope that it will be useful,
+ # but WITHOUT ANY WARRANTY; without even the implied warranty of
+ # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ # GNU General Public License for more details.
+ #
+ # You should have received a copy of the GNU General Public License
+ # along with MedShakeEHR.  If not, see <http://www.gnu.org/licenses/>.
+ #/
+
+/##
+ # Template > models4print : courrier de synthèse de fin de cure thermale 
+ #
+ # @author Bertrand Boutillier <b.boutillier@gmail.com>
+ #}
+
+{% set tag = page.courrier %}
+
+<p style="text-align : right;">New York, le {{ tag.date|date("d/m/Y") }}</p>
+
+<h2 style="text-align : center">{{ tag.identiteUsuelleTitreCourtDdn }}</h2>
+
+<h2 style="text-align : center">Cure du {{ tag.medtheCouMtDateDebut }} au {{ tag.medtheCouMtDateFin }}<br>
+Orientation{% if ',' in tag.medtheCouMtOrientations %}s{% endif %} : {{ tag.medtheCouMtOrientations }}</h2>
+
+<h3>Pathologies et algies :</h3>
+<p>{{ tag.medtheCouMtPathoAlgies|nl2br }}</p>
+
+<h3>Éléments cliniques</h3>
+
+<p>
+Taille : {{ tag.medtheCouMtTaille }} cm - Poids initial : {{ tag.medtheCouMtPoidsInitial }} kg - Poids final : {{ tag.medtheCouMtPoidsFinal }} kg<br>
+</p>
+
+<p>
+Tension artérielle : <br>
+1° consultation : {{ tag.medtheCouMtTASC1 }}/{{ tag.medtheCouMtTADC1 }} mmHg<br>
+2° consultation : {{ tag.medtheCouMtTASC2 }}/{{ tag.medtheCouMtTADC2 }} mmHg<br>
+3° consultation : {{ tag.medtheCouMtTASC3 }}/{{ tag.medtheCouMtTADC3 }} mmHg
+</p>
+
+{% if tag.medtheCouMtCs1CircoMolletG > 0 or tag.medtheCouMtCs3CircoMolletG > 0 or tag.medtheCouMtCs1CircoMolletDt > 0 or tag.medtheCouMtCs3CircoMolletDt > 0 or tag.medtheCouMtCs1CircoChevilleG > 0 or  tag.medtheCouMtCs3CircoChevilleG > 0 or tag.medtheCouMtCs1CircoChevilleDt > 0 or tag.medtheCouMtCs3CircoChevilleDt > 0 %}
+
+Circonférences aux membres inférieurs :
+<table>
+<tr><td>&nbsp;</td><td>Mollet G</td><td>Mollet D</td><td>Cheville G</td><td>Cheville D</td></tr>
+<tr><td>Début de cure</td><td>{{ tag.medtheCouMtCs1CircoMolletG }} cm</td><td>{{ tag.medtheCouMtCs1CircoMolletDt }} cm</td><td>{{ tag.medtheCouMtCs1CircoChevilleG }} cm</td><td>{{ tag.medtheCouMtCs1CircoChevilleDt }} cm</td></tr>
+<tr><td>Fin de cure</td><td>{{ tag.medtheCouMtCs3CircoMolletG }} cm</td><td>{{ tag.medtheCouMtCs3CircoMolletDt }} cm</td><td>{{ tag.medtheCouMtCs3CircoChevilleG }} cm</td><td>{{ tag.medtheCouMtCs3CircoChevilleDt }} cm</td></tr>
+</table>
+{% endif %}
+
+<h3>Soins</h3>
+<p>{{ tag.medtheCouMtSoins|nl2br }}</p>
+
+<h3>Observations</h3>
+<p>{{ tag.medtheCouMtObservation|nl2br }}</p>
+

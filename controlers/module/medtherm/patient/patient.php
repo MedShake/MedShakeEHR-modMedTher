@@ -28,45 +28,33 @@
  */
 
 // le formulaire latéral ATCD
-$formLat = new msForm();
-$formLat->setFormIDbyName('medthermATCD');
-$formLat->getPrevaluesForPatient($p['page']['patient']['id']);
-$p['page']['formLat']=$formLat->getForm();
-$p['page']['formJavascript']['medthermATCD']=$formLat->getFormJavascript();
+include('actions/inc-ajax-refreshLatColPatientAtcdData.php');
 
-// si LAP activé : allergie et atcd structurés
-if($p['config']['utiliserLap'] == 'true') {
+//chercher la dernière cure
+$dataSearch=new msData;
+$name2typeID = $dataSearch->getTypeIDsFromName(['medtheNouvelleCure', 'medtheFinCure']);
+if ($findGro=msSQL::sqlUnique("select pd.id as idGro, eg.id as idFin
+  from objets_data as pd
+  left join objets_data as eg on pd.id=eg.instance and eg.typeID='".$name2typeID['medtheFinCure']."' and eg.outdated='' and eg.deleted=''
+  where pd.toID='".$p['page']['patient']['id']."' and pd.typeID='".$name2typeID['medtheNouvelleCure']."' and pd.outdated='' and pd.deleted='' order by pd.creationDate desc
+  limit 1")) {
+    if (!$findGro['idFin']) {
+        $p['page']['cureEnCours']['id']=$findGro['idGro'];
 
-    // gestion atcd structurés
-    if(!empty(trim($p['config']['lapActiverAtcdStrucSur']))) {
-      $gethtml=new msGetHtml;
-      $gethtml->set_template('inc-patientAtcdStruc');
-      foreach(explode(',', $p['config']['lapActiverAtcdStrucSur']) as $v) {
-        $p['page']['beforeVar'][$v]=$patient->getAtcdStruc($v);
-        if(empty($p['page']['beforeVar'][$v])) $p['page']['beforeVar'][$v]=array('fake');
-        $p['page']['formLat']['before'][$v]=$gethtml->genererHtmlVar($p['page']['beforeVar'][$v]);
-      }
-      unset($p['page']['beforeVar'], $gethtml);
-    }
+        // générer le formulaire cure tête de page.
+        $formSyntheseCure = new msForm();
+        $formSyntheseCure->setFormIDbyName('medtheCureEnCours');
+        $formSyntheseCure->setInstance($p['page']['cureEnCours']['id']);
+        $formSyntheseCure->getPrevaluesForPatient($p['page']['patient']['id']);
+        $p['page']['formMedtheCureEnCours']=$formSyntheseCure->getForm();
+        $p['page']['formJavascript']['medtheCureEnCours']=$formSyntheseCure->getFormJavascript();
 
-    // gestion allergies structurées
-    if(!empty(trim($p['config']['lapActiverAllergiesStrucSur']))) {
-      $gethtml=new msGetHtml;
-      $gethtml->set_template('inc-patientAllergies');
-      foreach(explode(',', $p['config']['lapActiverAllergiesStrucSur']) as $v) {
-        $p['page']['beforeVar'][$v]=$patient->getAllergies($v);
-        if(empty($p['page']['beforeVar'][$v])) $p['page']['beforeVar'][$v]=array('fake');
-        $p['page']['formLat']['before'][$v]=$gethtml->genererHtmlVar($p['page']['beforeVar'][$v]);
-      }
-      unset($p['page']['beforeVar'], $gethtml);
+        //types de consultation
+        $typeCsMT=new msData;
+        $p['page']['csMedTherm']=$typeCsMT->getDataTypesFromCatName('csMedTherm', array('id','label','formValues'));
+        $p['page']['csMedThermAutres']=$typeCsMT->getDataTypesFromCatName('csMedThermAutres', array('id','label','formValues'));
     }
 }
-
-
-//types de consultation.
-$typeCsCla=new msData;
-$p['page']['typeCsCla']=$typeCsCla->getDataTypesFromCatName('csMedTherm', array('id','label', 'formValues'));
-
 
 //fixer les paramètres pour les formulaires d'ordonnance
 $data=new msData;

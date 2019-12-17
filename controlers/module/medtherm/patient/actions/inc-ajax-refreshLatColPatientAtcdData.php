@@ -34,6 +34,19 @@ $formLat->getPrevaluesForPatient($p['page']['patient']['id']);
 $p['page']['formLat']=$formLat->getForm();
 $p['page']['formJavascript']['medthermATCD']=$formLat->getFormJavascript();
 
+// corrections du form lat en fonction du sexe
+if(!isset($p['page']['patient']['administrativeDatas'])) {
+  $patient = new msPeople();
+  $patient->setToID($p['page']['patient']['id']);
+  $p['page']['patient']['administrativeDatas']=$patient->getAdministrativesDatas();
+  $p['page']['patient']['administrativeDatas']['birthdate']['ageFormats']=$patient->getAgeFormats();
+  $p['page']['patient']['administrativeDatas']['birthdate']['age']=$patient->getAge();
+}
+if($p['page']['patient']['administrativeDatas']['administrativeGenderCode']['value'] == 'M' or $p['page']['patient']['administrativeDatas']['birthdate']['ageFormats']['ageTotalYears'] > 50 ) {
+  $formLat->removeFieldFromForm($p['page']['formLat'], 'allaitementActuel');
+  $formLat->removeFieldFromForm($p['page']['formLat'], 'grossesseActuelle');
+}
+
 //les ALD du patient
 $p['page']['patient']['ALD']=$patient->getALD();
 
