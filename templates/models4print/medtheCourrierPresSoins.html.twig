@@ -1,0 +1,854 @@
+{#
+ # This file is part of MedShakeEHR.
+ #
+ # Copyright (c) 2019
+ # Bertrand Boutillier <b.boutillier@gmail.com>
+ # http://www.medshake.net
+ #
+ # MedShakeEHR is free software: you can redistribute it and/or modify
+ # it under the terms of the GNU General Public License as published by
+ # the Free Software Foundation, either version 3 of the License, or
+ # any later version.
+ #
+ # MedShakeEHR is distributed in the hope that it will be useful,
+ # but WITHOUT ANY WARRANTY; without even the implied warranty of
+ # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ # GNU General Public License for more details.
+ #
+ # You should have received a copy of the GNU General Public License
+ # along with MedShakeEHR.  If not, see <http://www.gnu.org/licenses/>.
+ #/
+
+/##
+ # Template > models4print : prescription des soins  
+ #
+ # @author Bertrand Boutillier <b.boutillier@gmail.com>
+ #}
+
+{% set tag = page.courrier %}
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <style>
+      @page {
+        margin: 50pt 30pt 30pt;
+        font-family: Helvetica;
+        font-size: 8pt;
+      }
+
+      table {
+        border-collapse: collapse;
+      }
+      table td,
+      table th {
+        border: 0.01em solid #ccc;
+        padding: 2pt 5pt;
+      }
+
+      .cbox {
+        font-family: DejaVu Sans, sans-serif;
+        font-size: 6pt;
+      }
+      .backGrey {
+        background-color: #ccc;
+
+      }
+
+      .gras {
+        font-weight: bold;
+      }
+      .centrer {
+        text-align: center;
+      }
+      .t6 {
+        font-size: 6pt;
+      }
+      .t8 {
+        font-size: 8pt;
+      }
+      .t9 {
+        font-size: 9pt;
+      }
+      .t10 {
+        font-size: 10pt;
+      }
+      .t12 {
+        font-size: 12pt;
+      }
+    </style>
+  </head>
+  <body>
+  <!-- stop head -->
+    <div style="width: 50%;display: inline-block;">
+      <div style="display: block; width: 100%;">
+        <h1 class="t12">ORDONNANCE DE MÉDECINE THERMALE</h1>
+        <h1 class="t10">{{ tag.identiteCompleteTitreLongDdn }}</h1>
+      </div>
+      <div class="t6" style="display: inline-block; width: 48%; border: 1px solid #ccc; height: 3cm; padding: 3pt; vertical-align: top;">
+        Cachet du médecin thermal
+      </div>
+
+      <div style="width: 48%;display: inline-block; vertical-align: top; height: 3cm;margin-left: 5pt">
+        <span class="t8 gras">Orientations :
+          <br>1 :
+          {% if tag.medthePresSoinsOrient1 is not empty %}{{ tag.medthePresSoinsOrient1 }}
+          {% else %}
+            -
+          {% endif %}
+          <br>2 :
+          {% if tag.medthePresSoinsOrient2 is not empty %}{{ tag.medthePresSoinsOrient2 }}
+          {% else %}
+            -
+          {% endif %}
+        </span><br>
+        <p style="margin-top: 10pt">
+          {% if tag.medthePresSoinsLimitSoins == 'true' %}
+            <span class="cbox t10">&#9745;</span>
+          {% else %}
+            <span class="cbox t10">&#9744;</span>{% endif %}
+          Limitation des soins
+          <br>
+
+          {% if tag.medthePresSoinsElevateur == 'true' %}
+            <span class="cbox t10">&#9745;</span>
+          {% else %}
+            <span class="cbox t10">&#9744;</span>{% endif %}
+          Élévateur
+          <br>
+        </p>
+      </div>
+    </div>
+
+    <div style="width: 48%;display: inline-block; padding-left: 10pt; vertical-align: top;">
+      <p style="">
+    	<span class="gras">Observations :</span><br>
+    	{{ tag.medthePresSoinsObservations|nl2br }}
+      </p>
+      <p>
+      	- 1er RDV médical : <br>
+        - 2e RDV médical : <br>
+        - 3e RDV médical : <br>
+      </p>
+    </div>
+
+    <table class="t6" style="margin-bottom: 15pt">
+      <tr class="border gras">
+        <td rowspan="2">Code</td>
+        <td rowspan="2">Soins thermaux</td>
+        <td colspan="5" class="centrer">Forfait</td>
+        <td rowspan="2" class="centrer">Nb soins</td>
+        <td rowspan="2" class="centrer">Durée<span class="t6">(mn)</span></td>
+        <td rowspan="2" style="width: 15mm; border-top: 0; border-bottom: 0;"></td>
+        <td rowspan="2" class="centrer t10" style="width: 130mm">Précisions des soins / Zones / Programmes</td>
+      </tr>
+      <tr class="border gras">
+        <td>PHL1</td>
+        <td>PHL3</td>
+        <td>GYN</td>
+        <td>RH1</td>
+        <td>RH3</td>
+      </tr>
+      <tr class="border">
+        <td class="centrer">201</td>
+        <td>Piscine</td>
+        <td class="centrer backGrey"></td>
+        <td class="centrer">
+          {% if tag.medthePresSoinsPiscinePhl3 == 'true' %}X{% endif %}
+        </td>
+        <td class="centrer backGrey"></td>
+        <td class="centrer">
+          {% if tag.medthePresSoinsPiscineRh1 == 'true' %}X{% endif %}
+        </td>
+        <td class="centrer">
+          {% if tag.medthePresSoinsPiscineRh3 == 'true' %}X{% endif %}
+        </td>
+        <td class="">
+          {% if tag.medthePresSoinsPiscineNbSoins > 0 %}{{ tag.medthePresSoinsPiscineNbSoins }}
+          {% endif %}
+        </td>
+        <td class="centrer">15</td>
+        <td style="width: 60pt; border-top: 0; border-bottom: 0;">&nbsp;</td>
+        <td>{{ tag.medthePresSoinsPiscinePreci }}</td>
+      </tr>
+      <tr class="border">
+        <td class="centrer">202</td>
+        <td>Bain</td>
+        <td class="centrer">
+          {% if tag.medthePresSoinsBainPhl1 == "true" %}X{% endif %}
+        </td>
+        <td class="centrer">
+          {% if tag.medthePresSoinsBainPhl3 == 'true' %}X{% endif %}
+        </td>
+        <td class="centrer">
+          {% if tag.medthePresSoinsBainGyn == 'true' %}X{% endif %}
+        </td>
+        <td class="centrer">
+          {% if tag.medthePresSoinsBainRh1 == 'true' %}X{% endif %}
+        </td>
+        <td class="centrer">
+          {% if tag.medthePresSoinsBainRh3 == 'true' %}X{% endif %}
+        </td>
+        <td class="">
+          {% if tag.medthePresSoinsBainNbSoins > 0 %}{{ tag.medthePresSoinsBainNbSoins }}
+          {% endif %}
+        </td>
+        <td class="centrer">10</td>
+        <td style="width: 60pt; border-top: 0; border-bottom: 0;">&nbsp;</td>
+        <td>
+          {% if tag.medthePresSoinsBainPreciT is not empty %}
+            T° :
+            {{ tag.medthePresSoinsBainPreciT }}°C &nbsp;&nbsp;&nbsp;&nbsp;
+          {% endif %}
+
+          {% if tag.val_medthePresSoinsBainPreciTemps == "10" %}
+            Durée : 10 min
+          {% elseif tag.val_medthePresSoinsBainPreciTemps == "20" %}
+            Durée : 20 min
+          {% endif %}
+        </td>
+      </tr>
+      <tr class="border">
+        <td class="centrer">203</td>
+        <td>Bain local des mains</td>
+        <td class="centrer backGrey"></td>
+        <td class="centrer backGrey"></td>
+        <td class="centrer backGrey"></td>
+        <td class="centrer">
+          {% if tag.medthePresSoinsBainLocalMainsRh1 == 'true' %}X{% endif %}
+        </td>
+        <td class="centrer">
+          {% if tag.medthePresSoinsBainLocalMainsRh3 == 'true' %}X{% endif %}
+        </td>
+        <td class="">
+          {% if tag.medthePresSoinsBainLocalMainsNbSoins > 0 %}{{ tag.medthePresSoinsBainLocalMainsNbSoins }}
+          {% endif %}
+        </td>
+        <td class="centrer">10</td>
+        <td style="width: 60pt; border-top: 0; border-bottom: 0;">&nbsp;</td>
+        <td>
+          {% if tag.medthePresSoinsBainLocalMainsPreci is not empty %}
+            {{ tag.medthePresSoinsBainLocalMainsPreci }}
+          {% endif %}
+        </td>
+      </tr>
+      <tr class="border">
+        <td class="centrer">205</td>
+        <td>Bain avec aérobain</td>
+        <td class="centrer">
+          {% if tag.medthePresSoinsBainAerobainPhl1 == "true" %}X{% endif %}
+        </td>
+        <td class="centrer">
+          {% if tag.medthePresSoinsBainAerobainPhl3 == 'true' %}X{% endif %}
+        </td>
+        <td class="centrer">
+          {% if tag.medthePresSoinsBainAerobainGyn == 'true' %}X{% endif %}
+        </td>
+        <td class="centrer">
+          {% if tag.medthePresSoinsBainAerobainRh1 == 'true' %}X{% endif %}
+        </td>
+        <td class="centrer">
+          {% if tag.medthePresSoinsBainAerobainRh3 == 'true' %}X{% endif %}
+        </td>
+        <td class="">
+          {% if tag.medthePresSoinsBainAerobainNbSoins > 0 %}{{ tag.medthePresSoinsBainAerobainNbSoins }}
+          {% endif %}
+        </td>
+        <td class="centrer">10</td>
+        <td style="width: 60pt; border-top: 0; border-bottom: 0;">&nbsp;</td>
+        <td>
+          {% if tag.medthePresSoinsBainAerobainPreciT is not empty %}
+            T° :
+            {{ tag.medthePresSoinsBainAerobainPreciT }}°C &nbsp;&nbsp;&nbsp;&nbsp;
+          {% endif %}
+
+          {% if tag.val_medthePresSoinsBainAerobainPreciTemps == "10" %}
+            Durée : 10 min
+          {% elseif tag.val_medthePresSoinsBainAerobainPreciTemps == "20" %}
+            Durée : 20 min
+          {% endif %}
+        </tr>
+        <tr class="border">
+          <td class="centrer">206</td>
+          <td>Bain avec douche en immersion</td>
+          <td class="centrer">
+            {% if tag.medthePresSoinsBainDoucheImmerPhl1 == "true" %}X{% endif %}
+          </td>
+          <td class="centrer">
+            {% if tag.medthePresSoinsBainDoucheImmerPhl3 == 'true' %}X{% endif %}
+          </td>
+          <td class="centrer">
+            {% if tag.medthePresSoinsBainDoucheImmerGyn == 'true' %}X{% endif %}
+          </td>
+          <td class="centrer">
+            {% if tag.medthePresSoinsBainDoucheImmerRh1 == 'true' %}X{% endif %}
+          </td>
+          <td class="centrer">
+            {% if tag.medthePresSoinsBainDoucheImmerRh3 == 'true' %}X{% endif %}
+          </td>
+          <td class="">
+            {% if tag.medthePresSoinsBainDoucheImmerNbSoins > 0 %}{{ tag.medthePresSoinsBainDoucheImmerNbSoins }}
+            {% endif %}
+          </td>
+          <td class="centrer">10</td>
+          <td style="width: 60pt; border-top: 0; border-bottom: 0;">&nbsp;</td>
+          <td>
+            PHL tonique (P10) :
+            {% if tag.medthePresSoinsBainDoucheImmerPreciPHLToni == 'true' %}
+              <span class="cbox">&#9745;</span>
+            {% else %}
+              <span class="cbox">&#9744;</span>{% endif %}
+            PHL drainant (P11) :
+            {% if tag.medthePresSoinsBainDoucheImmerPreciPHLDrain == 'true' %}
+              <span class="cbox">&#9745;</span>
+            {% else %}
+              <span class="cbox">&#9744;</span>{% endif %}
+            RH (P13) :
+            {% if tag.medthePresSoinsBainDoucheImmerPreciRH == 'true' %}
+              <span class="cbox">&#9745;</span>
+            {% else %}
+              <span class="cbox">&#9744;</span>{% endif %}
+            RH + PHL (P12) :
+            {% if tag.medthePresSoinsBainDoucheImmerPreciRHPHL == 'true' %}
+              <span class="cbox">&#9745;</span>
+            {% else %}
+              <span class="cbox">&#9744;</span>{% endif %}
+
+          </td>
+        </tr>
+        <tr class="border">
+          <td class="centrer">207</td>
+          <td>Bain avec douche sous marine</td>
+          <td class="centrer">
+            {% if tag.medthePresSoinsBainDoucheSsMarinePhl1 == "true" %}X{% endif %}
+          </td>
+          <td class="centrer">
+            {% if tag.medthePresSoinsBainDoucheSsMarinePhl3 == 'true' %}X{% endif %}
+          </td>
+          <td class="centrer">
+            {% if tag.medthePresSoinsBainDoucheSsMarineGyn == 'true' %}X{% endif %}
+          </td>
+          <td class="centrer">
+            {% if tag.medthePresSoinsBainDoucheSsMarineRh1 == 'true' %}X{% endif %}
+          </td>
+          <td class="centrer">
+            {% if tag.medthePresSoinsBainDoucheSsMarineRh3 == 'true' %}X{% endif %}
+          </td>
+          <td class="">
+            {% if tag.medthePresSoinsBainDoucheSsMarineNbSoins > 0 %}{{ tag.medthePresSoinsBainDoucheSsMarineNbSoins }}
+            {% endif %}
+          </td>
+          <td class="centrer">3</td>
+          <td style="width: 60pt; border-top: 0; border-bottom: 0;">&nbsp;</td>
+          <td>
+            {% if tag.medthePresSoinsBainDoucheSsMarinePreciZones is not empty %}
+              Zones :
+              {{ tag.medthePresSoinsBainDoucheSsMarinePreciZones }}
+            {% endif %}
+          </td>
+        </tr>
+        <tr class="border">
+          <td class="centrer">A304</td>
+          <td>Douche générale automatisée (DC)</td>
+          <td class="centrer backGrey"></td>
+          <td class="centrer backGrey"></td>
+          <td class="centrer backGrey"></td>
+          <td class="centrer">
+            {% if tag.medthePresSoinsDoucheGenAutoRh1 == 'true' %}X{% endif %}
+          </td>
+          <td class="centrer">
+            {% if tag.medthePresSoinsDoucheGenAutoRh3 == 'true' %}X{% endif %}
+          </td>
+          <td class="">
+            {% if tag.medthePresSoinsDoucheGenAutoNbSoins > 0 %}{{ tag.medthePresSoinsDoucheGenAutoNbSoins }}
+            {% endif %}
+          </td>
+          <td class="centrer">3</td>
+          <td style="width: 60pt; border-top: 0; border-bottom: 0;">&nbsp;</td>
+          <td>
+            {% if tag.val_medthePresSoinsDoucheLocAutoPreciMinf == "o" %}Douche colonne - membres inf. : oui{% elseif tag.val_medthePresSoinsDoucheLocAutoPreciMinf == "n" %}Douche colonne - membres inf. : non{% endif %}
+          </td>
+        </tr>
+        <tr class="border">
+          <td class="centrer">302</td>
+          <td>Douche générale au jet</td>
+          <td class="centrer">
+            {% if tag.medthePresSoinsDoucheGenJetPhl1 == "true" %}X{% endif %}
+          </td>
+          <td class="centrer">
+            {% if tag.medthePresSoinsDoucheGenJetPhl3 == 'true' %}X{% endif %}
+          </td>
+          <td class="centrer">
+            {% if tag.medthePresSoinsDoucheGenJetGyn == 'true' %}X{% endif %}
+          </td>
+          <td class="centrer">
+            {% if tag.medthePresSoinsDoucheGenJetRh1 == 'true' %}X{% endif %}
+          </td>
+          <td class="centrer">
+            {% if tag.medthePresSoinsDoucheGenJetRh3 == 'true' %}X{% endif %}
+          </td>
+          <td class="">
+            {% if tag.medthePresSoinsDoucheGenJetNbSoins > 0 %}{{ tag.medthePresSoinsDoucheGenJetNbSoins }}
+            {% endif %}
+          </td>
+          <td class="centrer">3</td>
+          <td style="width: 60pt; border-top: 0; border-bottom: 0;">&nbsp;</td>
+          <td>
+            {% if tag.val_medthePresSoinsDoucheGenJetPreciPosi == "coucheDebout" %}Couché + debout{% elseif tag.val_medthePresSoinsDoucheGenJetPreciPosi == "couche" %}Couché{% elseif tag.val_medthePresSoinsDoucheGenJetPreciPosi == "debout" %}Debout{% elseif tag.val_medthePresSoinsDoucheGenJetPreciPosi == "assis" %}Assis{% endif %}
+          </td>
+        </tr>
+        <tr class="border">
+          <td class="centrer">303</td>
+          <td>Douche locale automatisée (BDS)</td>
+          <td class="centrer">
+            {% if tag.medthePresSoinsDoucheLocAutoPhl1 == "true" %}X{% endif %}
+          </td>
+          <td class="centrer">
+            {% if tag.medthePresSoinsDoucheLocAutoPhl3 == 'true' %}X{% endif %}
+          </td>
+          <td class="centrer">
+            {% if tag.medthePresSoinsDoucheLocAutoGyn == 'true' %}X{% endif %}
+          </td>
+          <td class="centrer backGrey"></td>
+          <td class="centrer backGrey"></td>
+          <td class="">
+            {% if tag.medthePresSoinsDoucheLocAutoNbSoins > 0 %}{{ tag.medthePresSoinsDoucheLocAutoNbSoins }}
+            {% endif %}
+          </td>
+          <td class="centrer">
+            {% if tag.val_medthePresSoinsDoucheLocAutoDuree == "5" %}5{% elseif tag.val_medthePresSoinsDoucheLocAutoDuree == "10" %}10{% endif %}
+          </td>
+          <td style="width: 60pt; border-top: 0; border-bottom: 0;">&nbsp;</td>
+          <td>
+            Bain de siège :
+            {% if tag.medthePresSoinsDoucheLocAutoPreciBds == 'true' %}
+              <span class="cbox">&#9745;</span>
+            {% else %}
+              <span class="cbox">&#9744;</span>{% endif %}
+            &nbsp;&nbsp;&nbsp; Phl=Kneipp (K303) :
+            {% if tag.medthePresSoinsDoucheLocAutoPreciPhlKneipp == 'true' %}
+              <span class="cbox">&#9745;</span>
+            {% else %}
+              <span class="cbox">&#9744;</span>{% endif %}
+          </td>
+        </tr>
+        <tr class="border">
+          <td class="centrer">304</td>
+          <td>Douche locale au jet (DLP)</td>
+          <td class="centrer">
+            {% if tag.medthePresSoinsDoucheLocJetPhl1 == "true" %}X{% endif %}
+          </td>
+          <td class="centrer">
+            {% if tag.medthePresSoinsDoucheLocJetPhl3 == 'true' %}X{% endif %}
+          </td>
+          <td class="centrer">
+            {% if tag.medthePresSoinsDoucheLocJetGyn == 'true' %}X{% endif %}
+          </td>
+          <td class="centrer backGrey"></td>
+          <td class="centrer backGrey"></td>
+          <td class="">
+            {% if tag.medthePresSoinsDoucheLocJetNbSoins > 0 %}{{ tag.medthePresSoinsDoucheLocJetNbSoins }}
+            {% endif %}
+          </td>
+          <td class="centrer">3</td>
+          <td style="width: 60pt; border-top: 0; border-bottom: 0;">&nbsp;</td>
+          <td>Localisation : Cuisses :
+            {% if tag.medthePresSoinsDoucheLocJetPreciCuisses == 'true' %}
+              <span class="cbox">&#9745;</span>
+            {% else %}
+              <span class="cbox">&#9744;</span>{% endif %}
+            &nbsp;&nbsp;&nbsp; Fessiers :
+            {% if tag.medthePresSoinsDoucheLocJetPreciFessiers == 'true' %}
+              <span class="cbox">&#9745;</span>
+            {% else %}
+              <span class="cbox">&#9744;</span>{% endif %}
+            &nbsp;&nbsp;&nbsp; Hanches :
+            {% if tag.medthePresSoinsDoucheLocJetPreciHanches == 'true' %}
+              <span class="cbox">&#9745;</span>
+            {% else %}
+              <span class="cbox">&#9744;</span>{% endif %}
+            &nbsp;&nbsp;&nbsp; Ventre :
+            {% if tag.medthePresSoinsDoucheLocJetPreciVentre == 'true' %}
+              <span class="cbox">&#9745;</span>
+            {% else %}
+              <span class="cbox">&#9744;</span>{% endif %}
+            &nbsp;&nbsp;&nbsp; Bras :
+            {% if tag.medthePresSoinsDoucheLocJetPreciBras == 'true' %}
+              <span class="cbox">&#9745;</span>
+            {% else %}
+              <span class="cbox">&#9744;</span>{% endif %}
+            &nbsp;&nbsp;&nbsp;
+          </td>
+        </tr>
+        <tr class="border">
+          <td class="centrer">306</td>
+          <td>Douche sous immersion en piscine</td>
+          <td class="centrer backGrey"></td>
+          <td class="centrer backGrey"></td>
+          <td class="centrer backGrey"></td>
+          <td class="centrer">
+            {% if tag.medthePresSoinsDoucheSsImmerPiscineRh1 == 'true' %}X{% endif %}
+          </td>
+          <td class="centrer">
+            {% if tag.medthePresSoinsDoucheSsImmerPiscineRh3 == 'true' %}X{% endif %}
+          </td>
+          <td class="">
+            {% if tag.medthePresSoinsDoucheSsImmerPiscineNbSoins > 0 %}{{ tag.medthePresSoinsDoucheSsImmerPiscineNbSoins }}
+            {% endif %}
+          </td>
+          <td class="centrer">10</td>
+          <td style="width: 60pt; border-top: 0; border-bottom: 0;">&nbsp;</td>
+          <td>
+            {% if tag.val_medthePresSoinsDoucheSsImmerPiscinePreciPression == "forte" %}
+              Pression forte
+            {% elseif tag.val_medthePresSoinsDoucheSsImmerPiscinePreciPression == "faible" %}
+              Pression faible
+            {% endif %}
+          </td>
+        </tr>
+        <tr class="border">
+          <td class="centrer">321</td>
+          <td>Pulvérisation des membres</td>
+          <td class="centrer">
+            {% if tag.medthePresSoinsPulvMembresPhl1 == "true" %}X{% endif %}
+          </td>
+          <td class="centrer">
+            {% if tag.medthePresSoinsPulvMembresPhl3 == 'true' %}X{% endif %}
+          </td>
+          <td class="centrer">
+            {% if tag.medthePresSoinsPulvMembresGyn == 'true' %}X{% endif %}
+          </td>
+          <td class="centrer backGrey"></td>
+          <td class="centrer backGrey"></td>
+          <td class="">
+            {% if tag.medthePresSoinsPulvMembresNbSoins > 0 %}{{ tag.medthePresSoinsPulvMembresNbSoins }}
+            {% endif %}
+          </td>
+          <td class="centrer">3</td>
+          <td style="width: 60pt; border-top: 0; border-bottom: 0;">&nbsp;</td>
+          <td>
+            Membres sup. :
+            {% if tag.medthePresSoinsPulvMembresPreciMsup == 'true' %}
+              <span class="cbox">&#9745;</span>
+            {% else %}
+              <span class="cbox">&#9744;</span>{% endif %}
+            &nbsp;&nbsp;&nbsp; Membres inf. :
+            {% if tag.medthePresSoinsPulvMembresPreciMinf == 'true' %}
+              <span class="cbox">&#9745;</span>
+            {% else %}
+              <span class="cbox">&#9744;</span>{% endif %}
+            &nbsp;&nbsp;&nbsp; Ulcères :
+            {% if tag.medthePresSoinsPulvMembresPreciUlceres == 'true' %}
+              <span class="cbox">&#9745;</span>
+            {% else %}
+              <span class="cbox">&#9744;</span>{% endif %}
+            &nbsp;&nbsp;&nbsp;
+
+          </td>
+        </tr>
+        <tr class="border">
+          <td class="centrer">404</td>
+          <td>Illution locale unique</td>
+          <td class="centrer backGrey"></td>
+          <td class="centrer backGrey"></td>
+          <td class="centrer backGrey"></td>
+          <td class="centrer">
+            {% if tag.medthePresSoinsIllutLocUniqueRh1 == 'true' %}X{% endif %}
+          </td>
+          <td class="centrer">
+            {% if tag.medthePresSoinsIllutLocUniqueRh3 == 'true' %}X{% endif %}
+          </td>
+          <td class="">
+            {% if tag.medthePresSoinsIllutLocUniqueNbSoins > 0 %}{{ tag.medthePresSoinsIllutLocUniqueNbSoins }}
+            {% endif %}
+          </td>
+          <td class="centrer">10</td>
+          <td style="width: 60pt; border-top: 0; border-bottom: 0;">&nbsp;</td>
+          <td>
+            {% if tag.medthePresSoinsIllutLocUniquePreci is not empty %}{{ tag.medthePresSoinsIllutLocUniquePreci }}
+            {% endif %}
+          </td>
+        </tr>
+        <tr class="border">
+          <td class="centrer">405</td>
+          <td>Illution locale multiple</td>
+          <td class="centrer backGrey"></td>
+          <td class="centrer backGrey"></td>
+          <td class="centrer">
+            {% if tag.medthePresSoinsIllutLocMultiGyn == 'true' %}X{% endif %}
+          </td>
+          <td class="centrer">
+            {% if tag.medthePresSoinsIllutLocMultiRh1 == 'true' %}X{% endif %}
+          </td>
+          <td class="centrer">
+            {% if tag.medthePresSoinsIllutLocMultiRh3 == 'true' %}X{% endif %}
+          </td>
+          <td class="">
+            {% if tag.medthePresSoinsIllutLocMultiNbSoins > 0 %}{{ tag.medthePresSoinsIllutLocMultiNbSoins }}
+            {% endif %}
+          </td>
+          <td class="centrer">15</td>
+          <td style="width: 60pt; border-top: 0; border-bottom: 0;">&nbsp;</td>
+          <td>4 parmi : Cou :
+            {% if tag.medthePresSoinsIllutLocPreciCou == 'true' %}
+              <span class="cbox">&#9745;</span>
+            {% else %}
+              <span class="cbox">&#9744;</span>{% endif %}
+            &nbsp;&nbsp;&nbsp; Épaules :
+            {% if tag.medthePresSoinsIllutLocPreciEpaules == 'true' %}
+              <span class="cbox">&#9745;</span>
+            {% else %}
+              <span class="cbox">&#9744;</span>{% endif %}
+            &nbsp;&nbsp;&nbsp; Dos :
+            {% if tag.medthePresSoinsIllutLocPreciDos == 'true' %}
+              <span class="cbox">&#9745;</span>
+            {% else %}
+              <span class="cbox">&#9744;</span>{% endif %}
+            &nbsp;&nbsp;&nbsp; Hanches :
+            {% if tag.medthePresSoinsIllutLocPreciHanches == 'true' %}
+              <span class="cbox">&#9745;</span>
+            {% else %}
+              <span class="cbox">&#9744;</span>{% endif %}
+            &nbsp;&nbsp;&nbsp; Coudes :
+            {% if tag.medthePresSoinsIllutLocPreciCoudes == 'true' %}
+              <span class="cbox">&#9745;</span>
+            {% else %}
+              <span class="cbox">&#9744;</span>{% endif %}
+            &nbsp;&nbsp;&nbsp; Genoux :
+            {% if tag.medthePresSoinsIllutLocPreciGenoux == 'true' %}
+              <span class="cbox">&#9745;</span>
+            {% else %}
+              <span class="cbox">&#9744;</span>{% endif %}
+            &nbsp;&nbsp;&nbsp;
+          </td>
+        </tr>
+        <tr class="border">
+          <td class="centrer">407</td>
+          <td>Cataplasme application locale unique</td>
+          <td class="centrer backGrey"></td>
+          <td class="centrer backGrey"></td>
+          <td class="centrer backGrey"></td>
+          <td class="centrer">
+            {% if tag.medthePresSoinsCataAppLocUniqueRh1 == 'true' %}X{% endif %}
+          </td>
+          <td class="centrer">
+            {% if tag.medthePresSoinsCataAppLocUniqueRh3 == 'true' %}X{% endif %}
+          </td>
+          <td class="">
+            {% if tag.medthePresSoinsCataAppLocUniqueNbSoins > 0 %}{{ tag.medthePresSoinsCataAppLocUniqueNbSoins }}
+            {% endif %}
+          </td>
+          <td class="centrer">10</td>
+          <td style="width: 60pt; border-top: 0; border-bottom: 0;">&nbsp;</td>
+          <td>
+            {% if tag.medthePresSoinsCataAppLocUniquePreci is not empty %}{{ tag.medthePresSoinsCataAppLocUniquePreci }}
+            {% endif %}
+          </td>
+        </tr>
+        <tr class="border">
+          <td class="centrer">408</td>
+          <td>Cataplasme application locale multiple</td>
+          <td class="centrer backGrey"></td>
+          <td class="centrer backGrey"></td>
+          <td class="centrer backGrey"></td>
+          <td class="centrer">
+            {% if tag.medthePresSoinsCataAppLccMultiRh1 == 'true' %}X{% endif %}
+          </td>
+          <td class="centrer">
+            {% if tag.medthePresSoinsCataAppLccMultiRh3 == 'true' %}X{% endif %}
+          </td>
+          <td class="">
+            {% if tag.medthePresSoinsCataAppLccMultiNbSoins > 0 %}{{ tag.medthePresSoinsCataAppLccMultiNbSoins }}
+            {% endif %}
+          </td>
+          <td class="centrer">15</td>
+          <td style="width: 60pt; border-top: 0; border-bottom: 0;">&nbsp;</td>
+          <td>4 parmi : Cou :
+            {% if tag.medthePresSoinsCataAppLccMultiPreciCou == 'true' %}
+              <span class="cbox">&#9745;</span>
+            {% else %}
+              <span class="cbox">&#9744;</span>{% endif %}
+            &nbsp;&nbsp;&nbsp; Épaules :
+            {% if tag.medthePresSoinsCataAppLccMultiPreciEpaules == 'true' %}
+              <span class="cbox">&#9745;</span>
+            {% else %}
+              <span class="cbox">&#9744;</span>{% endif %}
+            &nbsp;&nbsp;&nbsp; Dos :
+            {% if tag.medthePresSoinsCataAppLccMultiPreciDos == 'true' %}
+              <span class="cbox">&#9745;</span>
+            {% else %}
+              <span class="cbox">&#9744;</span>{% endif %}
+            &nbsp;&nbsp;&nbsp; Hanches :
+            {% if tag.medthePresSoinsCataAppLccMultiPreciHanches == 'true' %}
+              <span class="cbox">&#9745;</span>
+            {% else %}
+              <span class="cbox">&#9744;</span>{% endif %}
+            &nbsp;&nbsp;&nbsp; Coudes :
+            {% if tag.medthePresSoinsCataAppLccMultiPreciCoudes == 'true' %}
+              <span class="cbox">&#9745;</span>
+            {% else %}
+              <span class="cbox">&#9744;</span>{% endif %}
+            &nbsp;&nbsp;&nbsp; Genoux :
+            {% if tag.medthePresSoinsCataAppLccMultiPreciGenoux == 'true' %}
+              <span class="cbox">&#9745;</span>
+            {% else %}
+              <span class="cbox">&#9744;</span>{% endif %}
+            &nbsp;&nbsp;&nbsp;
+          </tr>
+          <tr class="border">
+            <td class="centrer">409</td>
+            <td>Compresses (+10 min repos)</td>
+            <td class="centrer">
+              {% if tag.medthePresSoinsCompressesPhl1 == "true" %}X{% endif %}
+            </td>
+            <td class="centrer">
+              {% if tag.medthePresSoinsCompressesPhl3 == 'true' %}X{% endif %}
+            </td>
+            <td class="centrer">
+              {% if tag.medthePresSoinsCompressesGyn == 'true' %}X{% endif %}
+            </td>
+            <td class="centrer backGrey"></td>
+            <td class="centrer backGrey"></td>
+            <td class="">
+              {% if tag.medthePresSoinsCompressesNbSoins > 0 %}{{ tag.medthePresSoinsCompressesNbSoins }}
+              {% endif %}
+            </td>
+            <td class="centrer">10</td>
+            <td style="width: 60pt; border-top: 0; border-bottom: 0;">&nbsp;</td>
+            <td>
+              Membres sup. :
+              {% if tag.medthePresSoinsCompressesPreciMsup == 'true' %}
+                <span class="cbox">&#9745;</span>
+              {% else %}
+                <span class="cbox">&#9744;</span>{% endif %}
+              &nbsp;&nbsp;&nbsp; Membres inf. :
+              {% if tag.medthePresSoinsCompressesPreciMinf == 'true' %}
+                <span class="cbox">&#9745;</span>
+              {% else %}
+                <span class="cbox">&#9744;</span>{% endif %}
+              &nbsp;&nbsp;&nbsp; Ulcères :
+              {% if tag.medthePresSoinsCompressesPreciUlceres == 'true' %}
+                <span class="cbox">&#9745;</span>
+              {% else %}
+                <span class="cbox">&#9744;</span>{% endif %}
+              &nbsp;&nbsp;&nbsp;
+            </td>
+          </tr>
+          <tr class="border">
+            <td class="centrer">513</td>
+            <td>Étuve locale</td>
+            <td class="centrer backGrey"></td>
+            <td class="centrer backGrey"></td>
+            <td class="centrer backGrey"></td>
+            <td class="centrer">
+              {% if tag.medthePresSoinsEtuveLocRh1 == 'true' %}X{% endif %}
+            </td>
+            <td class="centrer">
+              {% if tag.medthePresSoinsEtuveLocRh3 == 'true' %}X{% endif %}
+            </td>
+            <td class="">
+              {% if tag.medthePresSoinsEtuveLocNbSoins > 0 %}{{ tag.medthePresSoinsEtuveLocNbSoins }}
+              {% endif %}
+            </td>
+            <td class="centrer">10</td>
+            <td style="width: 60pt; border-top: 0; border-bottom: 0;">&nbsp;</td>
+            <td>
+              Mains :
+              {% if tag.medthePresSoinsEtuveLocPreciMains == 'true' %}
+                <span class="cbox">&#9745;</span>
+              {% else %}
+                <span class="cbox">&#9744;</span>{% endif %}
+              &nbsp;&nbsp;&nbsp; Pieds :
+              {% if tag.medthePresSoinsEtuveLocPreciPieds == 'true' %}
+                <span class="cbox">&#9745;</span>
+              {% else %}
+                <span class="cbox">&#9744;</span>{% endif %}
+              &nbsp;&nbsp;&nbsp;
+            </td>
+          </tr>
+          <tr class="border">
+            <td class="centrer">602</td>
+            <td>Massage sous l'eau kinésithérapie</td>
+            <td class="centrer backGrey"></td>
+            <td class="centrer">
+              {% if tag.medthePresSoinsMassageSsEauKinePhl3 == 'true' %}X{% endif %}
+            </td>
+            <td class="centrer backGrey"></td>
+            <td class="centrer backGrey"></td>
+            <td class="centrer">
+              {% if tag.medthePresSoinsMassageSsEauKineRh3 == 'true' %}X{% endif %}
+            </td>
+            <td class="">
+              {% if tag.medthePresSoinsMassageSsEauKineNbSoins > 0 %}{{ tag.medthePresSoinsMassageSsEauKineNbSoins }}
+              {% endif %}
+            </td>
+            <td class="centrer">10</td>
+            <td style="width: 60pt; border-top: 0; border-bottom: 0;">&nbsp;</td>
+            <td>
+              RH - Effleurage :
+              {% if tag.medthePresSoinsMassageSsEauKinePreciRHEff == 'true' %}
+                <span class="cbox">&#9745;</span>
+              {% else %}
+                <span class="cbox">&#9744;</span>{% endif %}
+              &nbsp;&nbsp;&nbsp; RH - Pétrissage :
+              {% if tag.medthePresSoinsMassageSsEauKinePreciRHPetri == 'true' %}
+                <span class="cbox">&#9745;</span>
+              {% else %}
+                <span class="cbox">&#9744;</span>{% endif %}
+              &nbsp;&nbsp;&nbsp; PHL - Jambes :
+              {% if tag.medthePresSoinsMassageSsEauKinePreciPHLJambes == 'true' %}
+                <span class="cbox">&#9745;</span>
+              {% else %}
+                <span class="cbox">&#9744;</span>{% endif %}
+              &nbsp;&nbsp;&nbsp; PHL - Dos :
+              {% if tag.medthePresSoinsMassageSsEauKinePreciPHLDos == 'true' %}
+                <span class="cbox">&#9745;</span>
+              {% else %}
+                <span class="cbox">&#9744;</span>{% endif %}
+              &nbsp;&nbsp;&nbsp; PHL - Bras :
+              {% if tag.medthePresSoinsMassageSsEauKinePreciPHLBras == 'true' %}
+                <span class="cbox">&#9745;</span>
+              {% else %}
+                <span class="cbox">&#9744;</span>{% endif %}
+              &nbsp;&nbsp;&nbsp;<br>
+              {% if tag.medthePresSoinsMassageSsEauKinePreciZones is not empty %}{{ tag.medthePresSoinsMassageSsEauKinePreciZones }}
+              {% endif %}
+            </td>
+          </tr>
+          <tr class="border">
+            <td class="centrer">805</td>
+            <td>Couloir de marche</td>
+            <td class="centrer">
+              {% if tag.medthePresSoinsCouloirMarchePhl1 == "true" %}X{% endif %}
+            </td>
+            <td class="centrer">
+              {% if tag.medthePresSoinsCouloirMarchePhl3 == 'true' %}X{% endif %}
+            </td>
+            <td class="centrer">
+              {% if tag.medthePresSoinsCouloirMarcheGyn == 'true' %}X{% endif %}
+            </td>
+            <td class="centrer backGrey"></td>
+            <td class="centrer backGrey"></td>
+            <td class="">
+              {% if tag.medthePresSoinsCouloirMarcheNbSoins > 0 %}{{ tag.medthePresSoinsCouloirMarcheNbSoins }}
+              {% endif %}
+            </td>
+            <td class="centrer">20</td>
+            <td style="width: 60pt; border-top: 0; border-bottom: 0;">&nbsp;</td>
+            <td>
+              {% if tag.medthePresSoinsCouloirMarchePreci is not empty %}
+                {{ tag.medthePresSoinsCouloirMarchePreci }}
+              {% endif %}
+            </td>
+          </tr>
+          <tr>
+            <td style="border: 0" colspan="10">Durée des soins définie par le Guide national des Pratiques Médicales Thermales</td>
+            <td style="border: 0">En cas d'absence d'une journée merci de prévenir obligatoirement l'établissement thermal</td>
+          </tr>
+        </table>
+
+        <div style="text-align : left; width: 25%; display: inline-block">Le
+          {{ tag.date|date("d/m/Y") }}</div>
+        <div style="text-align : left; width: 25%; display: inline-block">Signature médecin :</div>
+        <!-- stop body -->
+      </body>
+    </html>

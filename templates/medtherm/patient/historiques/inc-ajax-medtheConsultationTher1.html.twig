@@ -1,0 +1,56 @@
+{#
+ # This file is part of MedShakeEHR.
+ #
+ # Copyright (c) 2019
+ # Bertrand Boutillier <b.boutillier@gmail.com>
+ # http://www.medshake.net
+ #
+ # MedShakeEHR is free software: you can redistribute it and/or modify
+ # it under the terms of the GNU General Public License as published by
+ # the Free Software Foundation, either version 3 of the License, or
+ # any later version.
+ #
+ # MedShakeEHR is distributed in the hope that it will be useful,
+ # but WITHOUT ANY WARRANTY; without even the implied warranty of
+ # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ # GNU General Public License for more details.
+ #
+ # You should have received a copy of the GNU General Public License
+ # along with MedShakeEHR.  If not, see <http://www.gnu.org/licenses/>.
+ #/
+
+/##
+ # Template > patient : details sur consultation thermale 1
+ #
+ # @author Bertrand Boutillier <b.boutillier@gmail.com>
+ #}
+ <td></td>
+ <td colspan="4" class="py-4">
+
+   <h4>Consultation thermale 1</h4>
+   <strong>Poids</strong> : {{ page.dataPre.poids.value }} kg - <strong>Taille</strong> : {{ page.dataPre.taillePatient.value }} cm - <strong>IMC</strong> : {{ page.dataPre.imc.value }} kg/m²<br>
+   <strong>Tension artérielle</strong> : {{ page.dataPre.taSystolique.value }}/{{ page.dataPre.taDiastolique.value }} mmHg<br>
+
+   <div class="row col-12 col-md-6 mt-3">
+     <table class="table table-sm">
+       <tr>
+         <td></td>
+         <td><strong>Gauche</strong></td>
+         <td><strong>Droit</strong></td>
+       </tr>
+       <tr>
+         <td><strong>Mollets</strong></td>
+         <td>{{ page.dataPre.medtheCs1CircoMolletG.value }} cm</td>
+         <td>{{ page.dataPre.medtheCs1CircoMolletDt.value }} cm</td>
+       </tr>
+       <tr>
+         <td><strong>Chevilles</strong></td>
+         <td>{{ page.dataPre.medtheCs1CircoChevilleG.value }} cm</td>
+         <td>{{ page.dataPre.medtheCs1CircoChevilleDt.value }} cm</td>
+       </tr>
+     </table>
+   </div>
+
+   <p><strong>Examen général</strong> :<br>{{ page.dataPre.medtheCs1ExamenGen.value|nl2br }}</p>
+
+ </td>
