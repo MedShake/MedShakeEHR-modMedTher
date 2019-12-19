@@ -255,6 +255,10 @@ INSERT IGNORE INTO `data_types` (`groupe`, `name`, `placeholder`, `label`, `desc
 ('medical', 'medthePresSoinsPulvMembresPreciMsup', '', 'Membres sup.', '', '', '', 'checkbox', '', 'medtherm', @catID, '1', '2019-01-01 00:00:00', '3600', '81'),
 ('medical', 'medthePresSoinsPulvMembresPreciUlceres', '', 'Ulcères', '', '', '', 'checkbox', '', 'medtherm', @catID, '1', '2019-01-01 00:00:00', '3600', '83');
 
+-- configuration
+INSERT IGNORE INTO `configuration` (`name`, `level`, `toID`, `module`, `cat`, `type`, `description`, `value`) VALUES
+('agendaTypesRdvClefModuleMedThermale', 'default', '0', 'medtherm', 'Agenda', '', 'Types de rendez-vous à considérer pour la détection des 3 rdv systématiques de cure, séparés par virgule sans espace ', '');
+
 -- forms_cat
 INSERT IGNORE INTO `forms_cat` (`name`, `label`, `description`, `type`, `fromID`, `creationDate`) VALUES
 ('formATCD', 'Formulaires d\'antécédents', 'Formulaires pour construire les antécédents', 'user', '1', '2019-01-01 00:00:00'),

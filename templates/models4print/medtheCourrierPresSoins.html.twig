@@ -20,7 +20,7 @@
  #/
 
 /##
- # Template > models4print : prescription des soins  
+ # Template > models4print : prescription des soins
  #
  # @author Bertrand Boutillier <b.boutillier@gmail.com>
  #}
@@ -41,7 +41,7 @@
       }
       table td,
       table th {
-        border: 0.01em solid #ccc;
+        border: 0.01em solid #666;
         padding: 2pt 5pt;
       }
 
@@ -50,8 +50,7 @@
         font-size: 6pt;
       }
       .backGrey {
-        background-color: #ccc;
-
+        background-color: #aaa;
       }
 
       .gras {
@@ -62,6 +61,9 @@
       }
       .t6 {
         font-size: 6pt;
+      }
+      .t7 {
+        font-size: 7pt;
       }
       .t8 {
         font-size: 8pt;
@@ -78,13 +80,13 @@
     </style>
   </head>
   <body>
-  <!-- stop head -->
+    <!-- stop head -->
     <div style="width: 50%;display: inline-block;">
       <div style="display: block; width: 100%;">
         <h1 class="t12">ORDONNANCE DE MÉDECINE THERMALE</h1>
         <h1 class="t10">{{ tag.identiteCompleteTitreLongDdn }}</h1>
       </div>
-      <div class="t6" style="display: inline-block; width: 48%; border: 1px solid #ccc; height: 3cm; padding: 3pt; vertical-align: top;">
+      <div class="t6" style="display: inline-block; width: 48%; border: 1px solid #888; height: 3cm; padding: 3pt; vertical-align: top;">
         Cachet du médecin thermal
       </div>
 
@@ -103,14 +105,14 @@
         </span><br>
         <p style="margin-top: 10pt">
           {% if tag.medthePresSoinsLimitSoins == 'true' %}
-            <span class="cbox t10">&#9745;</span>
+            <span class="cbox t10">&#9746;</span>
           {% else %}
             <span class="cbox t10">&#9744;</span>{% endif %}
           Limitation des soins
           <br>
 
           {% if tag.medthePresSoinsElevateur == 'true' %}
-            <span class="cbox t10">&#9745;</span>
+            <span class="cbox t10">&#9746;</span>
           {% else %}
             <span class="cbox t10">&#9744;</span>{% endif %}
           Élévateur
@@ -121,13 +123,16 @@
 
     <div style="width: 48%;display: inline-block; padding-left: 10pt; vertical-align: top;">
       <p style="">
-    	<span class="gras">Observations :</span><br>
-    	{{ tag.medthePresSoinsObservations|nl2br }}
+        <span class="gras">Observations :</span><br>
+        {{ tag.medthePresSoinsObservations|nl2br }}
       </p>
       <p>
-      	- 1er RDV médical : <br>
-        - 2e RDV médical : <br>
-        - 3e RDV médical : <br>
+        - 1er RDV médical :
+        {{ tag.RendezVousConsultation1 }}<br>
+        - 2e RDV médical :
+        {{ tag.RendezVousConsultation2 }}<br>
+        - 3e RDV médical :
+        {{ tag.RendezVousConsultation3 }}<br>
       </p>
     </div>
 
@@ -162,7 +167,7 @@
         <td class="centrer">
           {% if tag.medthePresSoinsPiscineRh3 == 'true' %}X{% endif %}
         </td>
-        <td class="">
+        <td class="centrer">
           {% if tag.medthePresSoinsPiscineNbSoins > 0 %}{{ tag.medthePresSoinsPiscineNbSoins }}
           {% endif %}
         </td>
@@ -188,7 +193,7 @@
         <td class="centrer">
           {% if tag.medthePresSoinsBainRh3 == 'true' %}X{% endif %}
         </td>
-        <td class="">
+        <td class="centrer">
           {% if tag.medthePresSoinsBainNbSoins > 0 %}{{ tag.medthePresSoinsBainNbSoins }}
           {% endif %}
         </td>
@@ -219,7 +224,7 @@
         <td class="centrer">
           {% if tag.medthePresSoinsBainLocalMainsRh3 == 'true' %}X{% endif %}
         </td>
-        <td class="">
+        <td class="centrer">
           {% if tag.medthePresSoinsBainLocalMainsNbSoins > 0 %}{{ tag.medthePresSoinsBainLocalMainsNbSoins }}
           {% endif %}
         </td>
@@ -249,7 +254,7 @@
         <td class="centrer">
           {% if tag.medthePresSoinsBainAerobainRh3 == 'true' %}X{% endif %}
         </td>
-        <td class="">
+        <td class="centrer">
           {% if tag.medthePresSoinsBainAerobainNbSoins > 0 %}{{ tag.medthePresSoinsBainAerobainNbSoins }}
           {% endif %}
         </td>
@@ -285,7 +290,7 @@
           <td class="centrer">
             {% if tag.medthePresSoinsBainDoucheImmerRh3 == 'true' %}X{% endif %}
           </td>
-          <td class="">
+          <td class="centrer">
             {% if tag.medthePresSoinsBainDoucheImmerNbSoins > 0 %}{{ tag.medthePresSoinsBainDoucheImmerNbSoins }}
             {% endif %}
           </td>
@@ -294,22 +299,22 @@
           <td>
             PHL tonique (P10) :
             {% if tag.medthePresSoinsBainDoucheImmerPreciPHLToni == 'true' %}
-              <span class="cbox">&#9745;</span>
+              <span class="cbox">&#9746;</span>
             {% else %}
               <span class="cbox">&#9744;</span>{% endif %}
             PHL drainant (P11) :
             {% if tag.medthePresSoinsBainDoucheImmerPreciPHLDrain == 'true' %}
-              <span class="cbox">&#9745;</span>
+              <span class="cbox">&#9746;</span>
             {% else %}
               <span class="cbox">&#9744;</span>{% endif %}
             RH (P13) :
             {% if tag.medthePresSoinsBainDoucheImmerPreciRH == 'true' %}
-              <span class="cbox">&#9745;</span>
+              <span class="cbox">&#9746;</span>
             {% else %}
               <span class="cbox">&#9744;</span>{% endif %}
             RH + PHL (P12) :
             {% if tag.medthePresSoinsBainDoucheImmerPreciRHPHL == 'true' %}
-              <span class="cbox">&#9745;</span>
+              <span class="cbox">&#9746;</span>
             {% else %}
               <span class="cbox">&#9744;</span>{% endif %}
 
@@ -333,7 +338,7 @@
           <td class="centrer">
             {% if tag.medthePresSoinsBainDoucheSsMarineRh3 == 'true' %}X{% endif %}
           </td>
-          <td class="">
+          <td class="centrer">
             {% if tag.medthePresSoinsBainDoucheSsMarineNbSoins > 0 %}{{ tag.medthePresSoinsBainDoucheSsMarineNbSoins }}
             {% endif %}
           </td>
@@ -358,7 +363,7 @@
           <td class="centrer">
             {% if tag.medthePresSoinsDoucheGenAutoRh3 == 'true' %}X{% endif %}
           </td>
-          <td class="">
+          <td class="centrer">
             {% if tag.medthePresSoinsDoucheGenAutoNbSoins > 0 %}{{ tag.medthePresSoinsDoucheGenAutoNbSoins }}
             {% endif %}
           </td>
@@ -386,7 +391,7 @@
           <td class="centrer">
             {% if tag.medthePresSoinsDoucheGenJetRh3 == 'true' %}X{% endif %}
           </td>
-          <td class="">
+          <td class="centrer">
             {% if tag.medthePresSoinsDoucheGenJetNbSoins > 0 %}{{ tag.medthePresSoinsDoucheGenJetNbSoins }}
             {% endif %}
           </td>
@@ -410,7 +415,7 @@
           </td>
           <td class="centrer backGrey"></td>
           <td class="centrer backGrey"></td>
-          <td class="">
+          <td class="centrer">
             {% if tag.medthePresSoinsDoucheLocAutoNbSoins > 0 %}{{ tag.medthePresSoinsDoucheLocAutoNbSoins }}
             {% endif %}
           </td>
@@ -421,12 +426,12 @@
           <td>
             Bain de siège :
             {% if tag.medthePresSoinsDoucheLocAutoPreciBds == 'true' %}
-              <span class="cbox">&#9745;</span>
+              <span class="cbox">&#9746;</span>
             {% else %}
               <span class="cbox">&#9744;</span>{% endif %}
             &nbsp;&nbsp;&nbsp; Phl=Kneipp (K303) :
             {% if tag.medthePresSoinsDoucheLocAutoPreciPhlKneipp == 'true' %}
-              <span class="cbox">&#9745;</span>
+              <span class="cbox">&#9746;</span>
             {% else %}
               <span class="cbox">&#9744;</span>{% endif %}
           </td>
@@ -445,7 +450,7 @@
           </td>
           <td class="centrer backGrey"></td>
           <td class="centrer backGrey"></td>
-          <td class="">
+          <td class="centrer">
             {% if tag.medthePresSoinsDoucheLocJetNbSoins > 0 %}{{ tag.medthePresSoinsDoucheLocJetNbSoins }}
             {% endif %}
           </td>
@@ -453,27 +458,27 @@
           <td style="width: 60pt; border-top: 0; border-bottom: 0;">&nbsp;</td>
           <td>Localisation : Cuisses :
             {% if tag.medthePresSoinsDoucheLocJetPreciCuisses == 'true' %}
-              <span class="cbox">&#9745;</span>
+              <span class="cbox">&#9746;</span>
             {% else %}
               <span class="cbox">&#9744;</span>{% endif %}
             &nbsp;&nbsp;&nbsp; Fessiers :
             {% if tag.medthePresSoinsDoucheLocJetPreciFessiers == 'true' %}
-              <span class="cbox">&#9745;</span>
+              <span class="cbox">&#9746;</span>
             {% else %}
               <span class="cbox">&#9744;</span>{% endif %}
             &nbsp;&nbsp;&nbsp; Hanches :
             {% if tag.medthePresSoinsDoucheLocJetPreciHanches == 'true' %}
-              <span class="cbox">&#9745;</span>
+              <span class="cbox">&#9746;</span>
             {% else %}
               <span class="cbox">&#9744;</span>{% endif %}
             &nbsp;&nbsp;&nbsp; Ventre :
             {% if tag.medthePresSoinsDoucheLocJetPreciVentre == 'true' %}
-              <span class="cbox">&#9745;</span>
+              <span class="cbox">&#9746;</span>
             {% else %}
               <span class="cbox">&#9744;</span>{% endif %}
             &nbsp;&nbsp;&nbsp; Bras :
             {% if tag.medthePresSoinsDoucheLocJetPreciBras == 'true' %}
-              <span class="cbox">&#9745;</span>
+              <span class="cbox">&#9746;</span>
             {% else %}
               <span class="cbox">&#9744;</span>{% endif %}
             &nbsp;&nbsp;&nbsp;
@@ -491,7 +496,7 @@
           <td class="centrer">
             {% if tag.medthePresSoinsDoucheSsImmerPiscineRh3 == 'true' %}X{% endif %}
           </td>
-          <td class="">
+          <td class="centrer">
             {% if tag.medthePresSoinsDoucheSsImmerPiscineNbSoins > 0 %}{{ tag.medthePresSoinsDoucheSsImmerPiscineNbSoins }}
             {% endif %}
           </td>
@@ -519,7 +524,7 @@
           </td>
           <td class="centrer backGrey"></td>
           <td class="centrer backGrey"></td>
-          <td class="">
+          <td class="centrer">
             {% if tag.medthePresSoinsPulvMembresNbSoins > 0 %}{{ tag.medthePresSoinsPulvMembresNbSoins }}
             {% endif %}
           </td>
@@ -528,17 +533,17 @@
           <td>
             Membres sup. :
             {% if tag.medthePresSoinsPulvMembresPreciMsup == 'true' %}
-              <span class="cbox">&#9745;</span>
+              <span class="cbox">&#9746;</span>
             {% else %}
               <span class="cbox">&#9744;</span>{% endif %}
             &nbsp;&nbsp;&nbsp; Membres inf. :
             {% if tag.medthePresSoinsPulvMembresPreciMinf == 'true' %}
-              <span class="cbox">&#9745;</span>
+              <span class="cbox">&#9746;</span>
             {% else %}
               <span class="cbox">&#9744;</span>{% endif %}
             &nbsp;&nbsp;&nbsp; Ulcères :
             {% if tag.medthePresSoinsPulvMembresPreciUlceres == 'true' %}
-              <span class="cbox">&#9745;</span>
+              <span class="cbox">&#9746;</span>
             {% else %}
               <span class="cbox">&#9744;</span>{% endif %}
             &nbsp;&nbsp;&nbsp;
@@ -557,7 +562,7 @@
           <td class="centrer">
             {% if tag.medthePresSoinsIllutLocUniqueRh3 == 'true' %}X{% endif %}
           </td>
-          <td class="">
+          <td class="centrer">
             {% if tag.medthePresSoinsIllutLocUniqueNbSoins > 0 %}{{ tag.medthePresSoinsIllutLocUniqueNbSoins }}
             {% endif %}
           </td>
@@ -582,7 +587,7 @@
           <td class="centrer">
             {% if tag.medthePresSoinsIllutLocMultiRh3 == 'true' %}X{% endif %}
           </td>
-          <td class="">
+          <td class="centrer">
             {% if tag.medthePresSoinsIllutLocMultiNbSoins > 0 %}{{ tag.medthePresSoinsIllutLocMultiNbSoins }}
             {% endif %}
           </td>
@@ -590,32 +595,32 @@
           <td style="width: 60pt; border-top: 0; border-bottom: 0;">&nbsp;</td>
           <td>4 parmi : Cou :
             {% if tag.medthePresSoinsIllutLocPreciCou == 'true' %}
-              <span class="cbox">&#9745;</span>
+              <span class="cbox">&#9746;</span>
             {% else %}
               <span class="cbox">&#9744;</span>{% endif %}
             &nbsp;&nbsp;&nbsp; Épaules :
             {% if tag.medthePresSoinsIllutLocPreciEpaules == 'true' %}
-              <span class="cbox">&#9745;</span>
+              <span class="cbox">&#9746;</span>
             {% else %}
               <span class="cbox">&#9744;</span>{% endif %}
             &nbsp;&nbsp;&nbsp; Dos :
             {% if tag.medthePresSoinsIllutLocPreciDos == 'true' %}
-              <span class="cbox">&#9745;</span>
+              <span class="cbox">&#9746;</span>
             {% else %}
               <span class="cbox">&#9744;</span>{% endif %}
             &nbsp;&nbsp;&nbsp; Hanches :
             {% if tag.medthePresSoinsIllutLocPreciHanches == 'true' %}
-              <span class="cbox">&#9745;</span>
+              <span class="cbox">&#9746;</span>
             {% else %}
               <span class="cbox">&#9744;</span>{% endif %}
             &nbsp;&nbsp;&nbsp; Coudes :
             {% if tag.medthePresSoinsIllutLocPreciCoudes == 'true' %}
-              <span class="cbox">&#9745;</span>
+              <span class="cbox">&#9746;</span>
             {% else %}
               <span class="cbox">&#9744;</span>{% endif %}
             &nbsp;&nbsp;&nbsp; Genoux :
             {% if tag.medthePresSoinsIllutLocPreciGenoux == 'true' %}
-              <span class="cbox">&#9745;</span>
+              <span class="cbox">&#9746;</span>
             {% else %}
               <span class="cbox">&#9744;</span>{% endif %}
             &nbsp;&nbsp;&nbsp;
@@ -633,7 +638,7 @@
           <td class="centrer">
             {% if tag.medthePresSoinsCataAppLocUniqueRh3 == 'true' %}X{% endif %}
           </td>
-          <td class="">
+          <td class="centrer">
             {% if tag.medthePresSoinsCataAppLocUniqueNbSoins > 0 %}{{ tag.medthePresSoinsCataAppLocUniqueNbSoins }}
             {% endif %}
           </td>
@@ -656,7 +661,7 @@
           <td class="centrer">
             {% if tag.medthePresSoinsCataAppLccMultiRh3 == 'true' %}X{% endif %}
           </td>
-          <td class="">
+          <td class="centrer">
             {% if tag.medthePresSoinsCataAppLccMultiNbSoins > 0 %}{{ tag.medthePresSoinsCataAppLccMultiNbSoins }}
             {% endif %}
           </td>
@@ -664,32 +669,32 @@
           <td style="width: 60pt; border-top: 0; border-bottom: 0;">&nbsp;</td>
           <td>4 parmi : Cou :
             {% if tag.medthePresSoinsCataAppLccMultiPreciCou == 'true' %}
-              <span class="cbox">&#9745;</span>
+              <span class="cbox">&#9746;</span>
             {% else %}
               <span class="cbox">&#9744;</span>{% endif %}
             &nbsp;&nbsp;&nbsp; Épaules :
             {% if tag.medthePresSoinsCataAppLccMultiPreciEpaules == 'true' %}
-              <span class="cbox">&#9745;</span>
+              <span class="cbox">&#9746;</span>
             {% else %}
               <span class="cbox">&#9744;</span>{% endif %}
             &nbsp;&nbsp;&nbsp; Dos :
             {% if tag.medthePresSoinsCataAppLccMultiPreciDos == 'true' %}
-              <span class="cbox">&#9745;</span>
+              <span class="cbox">&#9746;</span>
             {% else %}
               <span class="cbox">&#9744;</span>{% endif %}
             &nbsp;&nbsp;&nbsp; Hanches :
             {% if tag.medthePresSoinsCataAppLccMultiPreciHanches == 'true' %}
-              <span class="cbox">&#9745;</span>
+              <span class="cbox">&#9746;</span>
             {% else %}
               <span class="cbox">&#9744;</span>{% endif %}
             &nbsp;&nbsp;&nbsp; Coudes :
             {% if tag.medthePresSoinsCataAppLccMultiPreciCoudes == 'true' %}
-              <span class="cbox">&#9745;</span>
+              <span class="cbox">&#9746;</span>
             {% else %}
               <span class="cbox">&#9744;</span>{% endif %}
             &nbsp;&nbsp;&nbsp; Genoux :
             {% if tag.medthePresSoinsCataAppLccMultiPreciGenoux == 'true' %}
-              <span class="cbox">&#9745;</span>
+              <span class="cbox">&#9746;</span>
             {% else %}
               <span class="cbox">&#9744;</span>{% endif %}
             &nbsp;&nbsp;&nbsp;
@@ -708,7 +713,7 @@
             </td>
             <td class="centrer backGrey"></td>
             <td class="centrer backGrey"></td>
-            <td class="">
+            <td class="centrer">
               {% if tag.medthePresSoinsCompressesNbSoins > 0 %}{{ tag.medthePresSoinsCompressesNbSoins }}
               {% endif %}
             </td>
@@ -717,17 +722,17 @@
             <td>
               Membres sup. :
               {% if tag.medthePresSoinsCompressesPreciMsup == 'true' %}
-                <span class="cbox">&#9745;</span>
+                <span class="cbox">&#9746;</span>
               {% else %}
                 <span class="cbox">&#9744;</span>{% endif %}
               &nbsp;&nbsp;&nbsp; Membres inf. :
               {% if tag.medthePresSoinsCompressesPreciMinf == 'true' %}
-                <span class="cbox">&#9745;</span>
+                <span class="cbox">&#9746;</span>
               {% else %}
                 <span class="cbox">&#9744;</span>{% endif %}
               &nbsp;&nbsp;&nbsp; Ulcères :
               {% if tag.medthePresSoinsCompressesPreciUlceres == 'true' %}
-                <span class="cbox">&#9745;</span>
+                <span class="cbox">&#9746;</span>
               {% else %}
                 <span class="cbox">&#9744;</span>{% endif %}
               &nbsp;&nbsp;&nbsp;
@@ -745,7 +750,7 @@
             <td class="centrer">
               {% if tag.medthePresSoinsEtuveLocRh3 == 'true' %}X{% endif %}
             </td>
-            <td class="">
+            <td class="centrer">
               {% if tag.medthePresSoinsEtuveLocNbSoins > 0 %}{{ tag.medthePresSoinsEtuveLocNbSoins }}
               {% endif %}
             </td>
@@ -754,12 +759,12 @@
             <td>
               Mains :
               {% if tag.medthePresSoinsEtuveLocPreciMains == 'true' %}
-                <span class="cbox">&#9745;</span>
+                <span class="cbox">&#9746;</span>
               {% else %}
                 <span class="cbox">&#9744;</span>{% endif %}
               &nbsp;&nbsp;&nbsp; Pieds :
               {% if tag.medthePresSoinsEtuveLocPreciPieds == 'true' %}
-                <span class="cbox">&#9745;</span>
+                <span class="cbox">&#9746;</span>
               {% else %}
                 <span class="cbox">&#9744;</span>{% endif %}
               &nbsp;&nbsp;&nbsp;
@@ -777,7 +782,7 @@
             <td class="centrer">
               {% if tag.medthePresSoinsMassageSsEauKineRh3 == 'true' %}X{% endif %}
             </td>
-            <td class="">
+            <td class="centrer">
               {% if tag.medthePresSoinsMassageSsEauKineNbSoins > 0 %}{{ tag.medthePresSoinsMassageSsEauKineNbSoins }}
               {% endif %}
             </td>
@@ -786,27 +791,27 @@
             <td>
               RH - Effleurage :
               {% if tag.medthePresSoinsMassageSsEauKinePreciRHEff == 'true' %}
-                <span class="cbox">&#9745;</span>
+                <span class="cbox">&#9746;</span>
               {% else %}
                 <span class="cbox">&#9744;</span>{% endif %}
               &nbsp;&nbsp;&nbsp; RH - Pétrissage :
               {% if tag.medthePresSoinsMassageSsEauKinePreciRHPetri == 'true' %}
-                <span class="cbox">&#9745;</span>
+                <span class="cbox">&#9746;</span>
               {% else %}
                 <span class="cbox">&#9744;</span>{% endif %}
               &nbsp;&nbsp;&nbsp; PHL - Jambes :
               {% if tag.medthePresSoinsMassageSsEauKinePreciPHLJambes == 'true' %}
-                <span class="cbox">&#9745;</span>
+                <span class="cbox">&#9746;</span>
               {% else %}
                 <span class="cbox">&#9744;</span>{% endif %}
               &nbsp;&nbsp;&nbsp; PHL - Dos :
               {% if tag.medthePresSoinsMassageSsEauKinePreciPHLDos == 'true' %}
-                <span class="cbox">&#9745;</span>
+                <span class="cbox">&#9746;</span>
               {% else %}
                 <span class="cbox">&#9744;</span>{% endif %}
               &nbsp;&nbsp;&nbsp; PHL - Bras :
               {% if tag.medthePresSoinsMassageSsEauKinePreciPHLBras == 'true' %}
-                <span class="cbox">&#9745;</span>
+                <span class="cbox">&#9746;</span>
               {% else %}
                 <span class="cbox">&#9744;</span>{% endif %}
               &nbsp;&nbsp;&nbsp;<br>
@@ -828,7 +833,7 @@
             </td>
             <td class="centrer backGrey"></td>
             <td class="centrer backGrey"></td>
-            <td class="">
+            <td class="centrer">
               {% if tag.medthePresSoinsCouloirMarcheNbSoins > 0 %}{{ tag.medthePresSoinsCouloirMarcheNbSoins }}
               {% endif %}
             </td>
