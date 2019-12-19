@@ -60,7 +60,7 @@ if ($findGro=msSQL::sqlUnique("select pd.id as idGro, eg.id as idFin
 $data=new msData;
 $ordos=$data->getDataTypesFromCatName('porteursOrdo', array('id', 'module', 'label', 'description', 'formValues'));
 foreach ($ordos as $v) {
-    if ($v['module']=='medtherm') {
+    if ($v['module']=='base') {
       $p['page']['formOrdo'][]=$v;
     }
 }
