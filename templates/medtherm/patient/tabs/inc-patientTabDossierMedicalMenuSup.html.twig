@@ -161,6 +161,8 @@
   <div>
   {% if page.cureEnCours.id == '' %}
       <a href="{{ config.protocol }}{{ config.host }}{{ config.urlHostSuffixe }}/module/actions/installNewCure/{{ page.patient.id }}/" role="button" class="btn btn-danger"><i class="fas fa-plus"></i> Nouvelle cure</a>
+
+      <button type="button" class="btn btn-outline-secondary addNewCS" data-formtocall="medtheFormCsAutre" data-parentid="0" data-mode="create"><i class="fas fa-stethoscope"></i> Consultation hors cure</button>
   {% endif %}
   </div>
 </div>
