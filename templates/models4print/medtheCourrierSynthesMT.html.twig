@@ -20,7 +20,7 @@
  #/
 
 /##
- # Template > models4print : courrier de synthèse de fin de cure thermale 
+ # Template > models4print : courrier de synthèse de fin de cure thermale
  #
  # @author Bertrand Boutillier <b.boutillier@gmail.com>
  #}
@@ -54,9 +54,21 @@ Tension artérielle : <br>
 
 Circonférences aux membres inférieurs :
 <table>
-<tr><td>&nbsp;</td><td>Mollet G</td><td>Mollet D</td><td>Cheville G</td><td>Cheville D</td></tr>
-<tr><td>Début de cure</td><td>{{ tag.medtheCouMtCs1CircoMolletG }} cm</td><td>{{ tag.medtheCouMtCs1CircoMolletDt }} cm</td><td>{{ tag.medtheCouMtCs1CircoChevilleG }} cm</td><td>{{ tag.medtheCouMtCs1CircoChevilleDt }} cm</td></tr>
-<tr><td>Fin de cure</td><td>{{ tag.medtheCouMtCs3CircoMolletG }} cm</td><td>{{ tag.medtheCouMtCs3CircoMolletDt }} cm</td><td>{{ tag.medtheCouMtCs3CircoChevilleG }} cm</td><td>{{ tag.medtheCouMtCs3CircoChevilleDt }} cm</td></tr>
+<tr><td>&nbsp;</td><td>Cheville D</td><td>Cheville G</td><td>Mollet D</td><td>Mollet G</td></tr>
+<tr>
+	<td>Début de cure</td>
+    <td>{{ tag.medtheCouMtCs1CircoChevilleDt }} cm</td>
+    <td>{{ tag.medtheCouMtCs1CircoChevilleG }} cm</td>
+    <td>{{ tag.medtheCouMtCs1CircoMolletDt }} cm</td>
+	<td>{{ tag.medtheCouMtCs1CircoMolletG }} cm</td>
+</tr>
+<tr>
+	<td>Fin de cure</td>
+    <td>{{ tag.medtheCouMtCs3CircoChevilleDt }} cm</td>
+    <td>{{ tag.medtheCouMtCs3CircoChevilleG }} cm</td>
+    <td>{{ tag.medtheCouMtCs3CircoMolletDt }} cm</td>
+	<td>{{ tag.medtheCouMtCs3CircoMolletG }} cm</td>
+</tr>
 </table>
 {% endif %}
 
@@ -65,4 +77,3 @@ Circonférences aux membres inférieurs :
 
 <h3>Observations</h3>
 <p>{{ tag.medtheCouMtObservation|nl2br }}</p>
-
