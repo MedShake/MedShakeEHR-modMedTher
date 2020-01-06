@@ -45,23 +45,24 @@ class msModMedthermDataCourrier
     public static function getCrDataCompleteModuleForm_medtheFormPresSoins(&$d)
     {
       global $p;
-      $ag = new msAgenda;
-      $ag->set_patientID($d['patientID']);
-      $ag->setStartDate(msTools::dateConverter($d['medtheCureActuDateDebut'], 'd/m/Y', 'Y-m-d 00:00:00'));
-      $ag->setEndDate(msTools::dateConverter($d['medtheCureActuDateFin'], 'd/m/Y', 'Y-m-d 23:59:59'));
-      if(isset($p['config']['agendaTypesRdvClefModuleMedThermale']) and !empty($p['config']['agendaTypesRdvClefModuleMedThermale'])) {
-        $rdvClefMedTherm = explode(',', $p['config']['agendaTypesRdvClefModuleMedThermale']);
-      } else {
-        $rdvClefMedTherm = [];
-      }
-      if($events = $ag->getLastActiveEventsForPatient(3, $rdvClefMedTherm)) {
-        $i=1;
-        foreach($events as $v) {
-          $d['RendezVousConsultation'.$i] = msTools::dateConverter($v['start'], 'Y-m-d H:i:s', 'd/m/Y H:i');
-          $i++;
+      if(msTools::validateDate($d['medtheCureActuDateDebut'], 'd/m/Y') and msTools::validateDate($d['medtheCureActuDateFin'], 'd/m/Y')) {
+        $ag = new msAgenda;
+        $ag->set_patientID($d['patientID']);
+        $ag->setStartDate(msTools::dateConverter($d['medtheCureActuDateDebut'], 'd/m/Y', 'Y-m-d 00:00:00'));
+        $ag->setEndDate(msTools::dateConverter($d['medtheCureActuDateFin'], 'd/m/Y', 'Y-m-d 23:59:59'));
+        if(isset($p['config']['agendaTypesRdvClefModuleMedThermale']) and !empty($p['config']['agendaTypesRdvClefModuleMedThermale'])) {
+          $rdvClefMedTherm = explode(',', $p['config']['agendaTypesRdvClefModuleMedThermale']);
+        } else {
+          $rdvClefMedTherm = [];
         }
-      }
-
+        if($events = $ag->getLastActiveEventsForPatient(3, $rdvClefMedTherm)) {
+          $i=1;
+          foreach($events as $v) {
+            $d['RendezVousConsultation'.$i] = msTools::dateConverter($v['start'], 'Y-m-d H:i:s', 'd/m/Y H:i');
+            $i++;
+          }
+        }
+     }
     }
 
 }
