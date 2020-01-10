@@ -47,7 +47,7 @@
 
       .cbox {
         font-family: DejaVu Sans, sans-serif;
-        font-size: 6pt;
+        font-size: 7pt;
       }
       .backGrey {
         background-color: #aaa;
@@ -65,7 +65,7 @@
       .t7 {
         font-size: 7pt;
       }
-      .t8 {
+	    .t8 {
         font-size: 8pt;
       }
       .t9 {
@@ -136,14 +136,14 @@
       </p>
     </div>
 
-    <table class="t6" style="margin-bottom: 15pt">
+    <table class="t7" style="margin-bottom: 15pt">
       <tr class="border gras">
         <td rowspan="2">Code</td>
         <td rowspan="2">Soins thermaux</td>
         <td colspan="5" class="centrer">Forfait</td>
         <td rowspan="2" class="centrer">Nb soins</td>
         <td rowspan="2" class="centrer">Durée<span class="t6">(mn)</span></td>
-        <td rowspan="2" style="width: 15mm; border-top: 0; border-bottom: 0;"></td>
+        <td rowspan="2" style="width: 5mm; border-top: 0; border-bottom: 0;"></td>
         <td rowspan="2" class="centrer t10" style="width: 130mm">Précisions des soins / Zones / Programmes</td>
       </tr>
       <tr class="border gras">
@@ -155,7 +155,7 @@
       </tr>
       <tr class="border">
         <td class="centrer">201</td>
-        <td>Piscine</td>
+        <td{% if tag.medthePresSoinsPiscineNbSoins > 0 %} class="gras"{% endif %}>Piscine</td>
         <td class="centrer backGrey"></td>
         <td class="centrer">
           {% if tag.medthePresSoinsPiscinePhl3 == 'true' %}X{% endif %}
@@ -172,12 +172,12 @@
           {% endif %}
         </td>
         <td class="centrer">15</td>
-        <td style="width: 60pt; border-top: 0; border-bottom: 0;">&nbsp;</td>
+        <td style="width: 20pt; border-top: 0; border-bottom: 0;">&nbsp;</td>
         <td>{{ tag.medthePresSoinsPiscinePreci }}</td>
       </tr>
       <tr class="border">
         <td class="centrer">202</td>
-        <td>Bain</td>
+        <td{% if tag.medthePresSoinsBainNbSoins > 0 %} class="gras"{% endif %}>Bain</td>
         <td class="centrer">
           {% if tag.medthePresSoinsBainPhl1 == "true" %}X{% endif %}
         </td>
@@ -198,7 +198,7 @@
           {% endif %}
         </td>
         <td class="centrer">10</td>
-        <td style="width: 60pt; border-top: 0; border-bottom: 0;">&nbsp;</td>
+        <td style="width: 20pt; border-top: 0; border-bottom: 0;">&nbsp;</td>
         <td>
           {% if tag.medthePresSoinsBainPreciT is not empty %}
             T° :
@@ -214,7 +214,7 @@
       </tr>
       <tr class="border">
         <td class="centrer">203</td>
-        <td>Bain local des mains</td>
+        <td{% if tag.medthePresSoinsBainLocalMainsNbSoins > 0 %} class="gras"{% endif %}>Bain local des mains</td>
         <td class="centrer backGrey"></td>
         <td class="centrer backGrey"></td>
         <td class="centrer backGrey"></td>
@@ -229,7 +229,7 @@
           {% endif %}
         </td>
         <td class="centrer">10</td>
-        <td style="width: 60pt; border-top: 0; border-bottom: 0;">&nbsp;</td>
+        <td style="width: 20pt; border-top: 0; border-bottom: 0;">&nbsp;</td>
         <td>
           {% if tag.medthePresSoinsBainLocalMainsPreci is not empty %}
             {{ tag.medthePresSoinsBainLocalMainsPreci }}
@@ -238,7 +238,7 @@
       </tr>
       <tr class="border">
         <td class="centrer">205</td>
-        <td>Bain avec aérobain</td>
+        <td{% if tag.medthePresSoinsBainAerobainNbSoins > 0 %} class="gras"{% endif %}>Bain avec aérobain</td>
         <td class="centrer">
           {% if tag.medthePresSoinsBainAerobainPhl1 == "true" %}X{% endif %}
         </td>
@@ -259,7 +259,7 @@
           {% endif %}
         </td>
         <td class="centrer">10</td>
-        <td style="width: 60pt; border-top: 0; border-bottom: 0;">&nbsp;</td>
+        <td style="width: 20pt; border-top: 0; border-bottom: 0;">&nbsp;</td>
         <td>
           {% if tag.medthePresSoinsBainAerobainPreciT is not empty %}
             T° :
@@ -274,7 +274,7 @@
         </tr>
         <tr class="border">
           <td class="centrer">206</td>
-          <td>Bain avec douche en immersion</td>
+          <td{% if tag.medthePresSoinsBainDoucheImmerNbSoins > 0 %} class="gras"{% endif %}>Bain avec douche en immersion</td>
           <td class="centrer">
             {% if tag.medthePresSoinsBainDoucheImmerPhl1 == "true" %}X{% endif %}
           </td>
@@ -295,7 +295,7 @@
             {% endif %}
           </td>
           <td class="centrer">10</td>
-          <td style="width: 60pt; border-top: 0; border-bottom: 0;">&nbsp;</td>
+          <td style="width: 20pt; border-top: 0; border-bottom: 0;">&nbsp;</td>
           <td>
             PHL tonique (P10) :
             {% if tag.medthePresSoinsBainDoucheImmerPreciPHLToni == 'true' %}
@@ -322,7 +322,7 @@
         </tr>
         <tr class="border">
           <td class="centrer">207</td>
-          <td>Bain avec douche sous marine</td>
+          <td{% if tag.medthePresSoinsBainDoucheSsMarineNbSoins > 0 %} class="gras"{% endif %}>Bain avec douche sous marine</td>
           <td class="centrer">
             {% if tag.medthePresSoinsBainDoucheSsMarinePhl1 == "true" %}X{% endif %}
           </td>
@@ -343,7 +343,7 @@
             {% endif %}
           </td>
           <td class="centrer">3</td>
-          <td style="width: 60pt; border-top: 0; border-bottom: 0;">&nbsp;</td>
+          <td style="width: 20pt; border-top: 0; border-bottom: 0;">&nbsp;</td>
           <td>
             {% if tag.medthePresSoinsBainDoucheSsMarinePreciZones is not empty %}
               Zones :
@@ -353,7 +353,7 @@
         </tr>
         <tr class="border">
           <td class="centrer">A304</td>
-          <td>Douche générale automatisée (DC)</td>
+          <td{% if tag.medthePresSoinsDoucheGenAutoNbSoins > 0 %} class="gras"{% endif %}>Douche générale automatisée (DC)</td>
           <td class="centrer backGrey"></td>
           <td class="centrer backGrey"></td>
           <td class="centrer backGrey"></td>
@@ -368,14 +368,14 @@
             {% endif %}
           </td>
           <td class="centrer">3</td>
-          <td style="width: 60pt; border-top: 0; border-bottom: 0;">&nbsp;</td>
+          <td style="width: 20pt; border-top: 0; border-bottom: 0;">&nbsp;</td>
           <td>
             {% if tag.val_medthePresSoinsDoucheLocAutoPreciMinf == "o" %}Douche colonne - membres inf. : oui{% elseif tag.val_medthePresSoinsDoucheLocAutoPreciMinf == "n" %}Douche colonne - membres inf. : non{% endif %}
           </td>
         </tr>
         <tr class="border">
           <td class="centrer">302</td>
-          <td>Douche générale au jet</td>
+          <td{% if tag.medthePresSoinsDoucheGenJetNbSoins > 0 %} class="gras"{% endif %}>Douche générale au jet</td>
           <td class="centrer">
             {% if tag.medthePresSoinsDoucheGenJetPhl1 == "true" %}X{% endif %}
           </td>
@@ -396,14 +396,14 @@
             {% endif %}
           </td>
           <td class="centrer">3</td>
-          <td style="width: 60pt; border-top: 0; border-bottom: 0;">&nbsp;</td>
+          <td style="width: 20pt; border-top: 0; border-bottom: 0;">&nbsp;</td>
           <td>
             {% if tag.val_medthePresSoinsDoucheGenJetPreciPosi == "coucheDebout" %}Couché + debout{% elseif tag.val_medthePresSoinsDoucheGenJetPreciPosi == "couche" %}Couché{% elseif tag.val_medthePresSoinsDoucheGenJetPreciPosi == "debout" %}Debout{% elseif tag.val_medthePresSoinsDoucheGenJetPreciPosi == "assis" %}Assis{% endif %}
           </td>
         </tr>
         <tr class="border">
           <td class="centrer">303</td>
-          <td>Douche locale automatisée (BDS)</td>
+          <td{% if tag.medthePresSoinsDoucheLocAutoNbSoins > 0 %} class="gras"{% endif %}>Douche locale automatisée (BDS)</td>
           <td class="centrer">
             {% if tag.medthePresSoinsDoucheLocAutoPhl1 == "true" %}X{% endif %}
           </td>
@@ -422,7 +422,7 @@
           <td class="centrer">
             {% if tag.val_medthePresSoinsDoucheLocAutoDuree == "5" %}5{% elseif tag.val_medthePresSoinsDoucheLocAutoDuree == "10" %}10{% endif %}
           </td>
-          <td style="width: 60pt; border-top: 0; border-bottom: 0;">&nbsp;</td>
+          <td style="width: 20pt; border-top: 0; border-bottom: 0;">&nbsp;</td>
           <td>
             Bain de siège :
             {% if tag.medthePresSoinsDoucheLocAutoPreciBds == 'true' %}
@@ -438,7 +438,7 @@
         </tr>
         <tr class="border">
           <td class="centrer">304</td>
-          <td>Douche locale au jet (DLP)</td>
+          <td{% if tag.medthePresSoinsDoucheLocJetNbSoins > 0 %} class="gras"{% endif %}>Douche locale au jet (DLP)</td>
           <td class="centrer">
             {% if tag.medthePresSoinsDoucheLocJetPhl1 == "true" %}X{% endif %}
           </td>
@@ -455,7 +455,7 @@
             {% endif %}
           </td>
           <td class="centrer">3</td>
-          <td style="width: 60pt; border-top: 0; border-bottom: 0;">&nbsp;</td>
+          <td style="width: 20pt; border-top: 0; border-bottom: 0;">&nbsp;</td>
           <td>Localisation : Cuisses :
             {% if tag.medthePresSoinsDoucheLocJetPreciCuisses == 'true' %}
               <span class="cbox">&#9746;</span>
@@ -486,7 +486,7 @@
         </tr>
         <tr class="border">
           <td class="centrer">306</td>
-          <td>Douche sous immersion en piscine</td>
+          <td{% if tag.medthePresSoinsDoucheSsImmerPiscineNbSoins > 0 %} class="gras"{% endif %}>Douche sous immersion en piscine</td>
           <td class="centrer backGrey"></td>
           <td class="centrer backGrey"></td>
           <td class="centrer backGrey"></td>
@@ -501,7 +501,7 @@
             {% endif %}
           </td>
           <td class="centrer">10</td>
-          <td style="width: 60pt; border-top: 0; border-bottom: 0;">&nbsp;</td>
+          <td style="width: 20pt; border-top: 0; border-bottom: 0;">&nbsp;</td>
           <td>
             {% if tag.val_medthePresSoinsDoucheSsImmerPiscinePreciPression == "forte" %}
               Pression forte
@@ -512,7 +512,7 @@
         </tr>
         <tr class="border">
           <td class="centrer">321</td>
-          <td>Pulvérisation des membres</td>
+          <td{% if tag.medthePresSoinsPulvMembresNbSoins > 0 %} class="gras"{% endif %}>Pulvérisation des membres</td>
           <td class="centrer">
             {% if tag.medthePresSoinsPulvMembresPhl1 == "true" %}X{% endif %}
           </td>
@@ -529,7 +529,7 @@
             {% endif %}
           </td>
           <td class="centrer">3</td>
-          <td style="width: 60pt; border-top: 0; border-bottom: 0;">&nbsp;</td>
+          <td style="width: 20pt; border-top: 0; border-bottom: 0;">&nbsp;</td>
           <td>
             Membres sup. :
             {% if tag.medthePresSoinsPulvMembresPreciMsup == 'true' %}
@@ -552,7 +552,7 @@
         </tr>
         <tr class="border">
           <td class="centrer">404</td>
-          <td>Illution locale unique</td>
+          <td{% if tag.medthePresSoinsIllutLocUniqueNbSoins > 0 %} class="gras"{% endif %}>Illution locale unique</td>
           <td class="centrer backGrey"></td>
           <td class="centrer backGrey"></td>
           <td class="centrer backGrey"></td>
@@ -567,7 +567,7 @@
             {% endif %}
           </td>
           <td class="centrer">10</td>
-          <td style="width: 60pt; border-top: 0; border-bottom: 0;">&nbsp;</td>
+          <td style="width: 20pt; border-top: 0; border-bottom: 0;">&nbsp;</td>
           <td>
             {% if tag.medthePresSoinsIllutLocUniquePreci is not empty %}{{ tag.medthePresSoinsIllutLocUniquePreci }}
             {% endif %}
@@ -575,7 +575,7 @@
         </tr>
         <tr class="border">
           <td class="centrer">405</td>
-          <td>Illution locale multiple</td>
+          <td{% if tag.medthePresSoinsIllutLocMultiNbSoins > 0 %} class="gras"{% endif %}>Illution locale multiple</td>
           <td class="centrer backGrey"></td>
           <td class="centrer backGrey"></td>
           <td class="centrer">
@@ -592,7 +592,7 @@
             {% endif %}
           </td>
           <td class="centrer">15</td>
-          <td style="width: 60pt; border-top: 0; border-bottom: 0;">&nbsp;</td>
+          <td style="width: 20pt; border-top: 0; border-bottom: 0;">&nbsp;</td>
           <td>4 parmi : Cou :
             {% if tag.medthePresSoinsIllutLocPreciCou == 'true' %}
               <span class="cbox">&#9746;</span>
@@ -628,7 +628,7 @@
         </tr>
         <tr class="border">
           <td class="centrer">407</td>
-          <td>Cataplasme application locale unique</td>
+          <td{% if tag.medthePresSoinsCataAppLocUniqueNbSoins > 0 %} class="gras"{% endif %}>Cataplasme application locale unique</td>
           <td class="centrer backGrey"></td>
           <td class="centrer backGrey"></td>
           <td class="centrer backGrey"></td>
@@ -643,7 +643,7 @@
             {% endif %}
           </td>
           <td class="centrer">10</td>
-          <td style="width: 60pt; border-top: 0; border-bottom: 0;">&nbsp;</td>
+          <td style="width: 20pt; border-top: 0; border-bottom: 0;">&nbsp;</td>
           <td>
             {% if tag.medthePresSoinsCataAppLocUniquePreci is not empty %}{{ tag.medthePresSoinsCataAppLocUniquePreci }}
             {% endif %}
@@ -651,7 +651,7 @@
         </tr>
         <tr class="border">
           <td class="centrer">408</td>
-          <td>Cataplasme application locale multiple</td>
+          <td{% if tag.medthePresSoinsCataAppLccMultiNbSoins > 0 %} class="gras"{% endif %}>Cataplasme application locale multiple</td>
           <td class="centrer backGrey"></td>
           <td class="centrer backGrey"></td>
           <td class="centrer backGrey"></td>
@@ -666,7 +666,7 @@
             {% endif %}
           </td>
           <td class="centrer">15</td>
-          <td style="width: 60pt; border-top: 0; border-bottom: 0;">&nbsp;</td>
+          <td style="width: 20pt; border-top: 0; border-bottom: 0;">&nbsp;</td>
           <td>4 parmi : Cou :
             {% if tag.medthePresSoinsCataAppLccMultiPreciCou == 'true' %}
               <span class="cbox">&#9746;</span>
@@ -701,7 +701,7 @@
           </tr>
           <tr class="border">
             <td class="centrer">409</td>
-            <td>Compresses (+10 min repos)</td>
+            <td{% if tag.medthePresSoinsCompressesNbSoins > 0 %} class="gras"{% endif %}>Compresses (+10 min repos)</td>
             <td class="centrer">
               {% if tag.medthePresSoinsCompressesPhl1 == "true" %}X{% endif %}
             </td>
@@ -718,7 +718,7 @@
               {% endif %}
             </td>
             <td class="centrer">10</td>
-            <td style="width: 60pt; border-top: 0; border-bottom: 0;">&nbsp;</td>
+            <td style="width: 20pt; border-top: 0; border-bottom: 0;">&nbsp;</td>
             <td>
               Membres sup. :
               {% if tag.medthePresSoinsCompressesPreciMsup == 'true' %}
@@ -740,7 +740,7 @@
           </tr>
           <tr class="border">
             <td class="centrer">513</td>
-            <td>Étuve locale</td>
+            <td{% if tag.medthePresSoinsEtuveLocNbSoins > 0 %} class="gras"{% endif %}>Étuve locale</td>
             <td class="centrer backGrey"></td>
             <td class="centrer backGrey"></td>
             <td class="centrer backGrey"></td>
@@ -755,7 +755,7 @@
               {% endif %}
             </td>
             <td class="centrer">10</td>
-            <td style="width: 60pt; border-top: 0; border-bottom: 0;">&nbsp;</td>
+            <td style="width: 20pt; border-top: 0; border-bottom: 0;">&nbsp;</td>
             <td>
               Mains :
               {% if tag.medthePresSoinsEtuveLocPreciMains == 'true' %}
@@ -772,7 +772,7 @@
           </tr>
           <tr class="border">
             <td class="centrer">602</td>
-            <td>Massage sous l'eau kinésithérapie</td>
+            <td{% if tag.medthePresSoinsMassageSsEauKineNbSoins > 0 %} class="gras"{% endif %}>Massage sous l'eau kinésithérapie</td>
             <td class="centrer backGrey"></td>
             <td class="centrer">
               {% if tag.medthePresSoinsMassageSsEauKinePhl3 == 'true' %}X{% endif %}
@@ -787,7 +787,7 @@
               {% endif %}
             </td>
             <td class="centrer">10</td>
-            <td style="width: 60pt; border-top: 0; border-bottom: 0;">&nbsp;</td>
+            <td style="width: 20pt; border-top: 0; border-bottom: 0;">&nbsp;</td>
             <td>
               RH - Effleurage :
               {% if tag.medthePresSoinsMassageSsEauKinePreciRHEff == 'true' %}
@@ -821,7 +821,7 @@
           </tr>
           <tr class="border">
             <td class="centrer">805</td>
-            <td>Couloir de marche</td>
+            <td{% if tag.medthePresSoinsCouloirMarcheNbSoins > 0 %} class="gras"{% endif %}>Couloir de marche</td>
             <td class="centrer">
               {% if tag.medthePresSoinsCouloirMarchePhl1 == "true" %}X{% endif %}
             </td>
@@ -838,7 +838,7 @@
               {% endif %}
             </td>
             <td class="centrer">20</td>
-            <td style="width: 60pt; border-top: 0; border-bottom: 0;">&nbsp;</td>
+            <td style="width: 20pt; border-top: 0; border-bottom: 0;">&nbsp;</td>
             <td>
               {% if tag.medthePresSoinsCouloirMarchePreci is not empty %}
                 {{ tag.medthePresSoinsCouloirMarchePreci }}
