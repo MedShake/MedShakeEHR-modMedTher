@@ -1,3 +1,25 @@
+-- actes_cat
+INSERT IGNORE INTO `actes_cat` (`name`, `label`, `description`, `module`, `fromID`, `creationDate`, `displayOrder`) VALUES
+('medtheCatRegMedG', 'Médecine générale', '', 'medtherm', 1, '2019-01-01 00:00:00', '2'),
+('medtheCatRegMedther', 'Médecine thermale', '', 'medtherm', 1, '2019-01-01 00:00:00', '1');
+
+-- actes_base
+INSERT IGNORE INTO `actes_base` (`code`, `activite`, `phase`, `codeProf`, `label`, `type`, `dataYaml`, `tarifUnit`, `fromID`, `creationDate`) VALUES
+('GS', '1', '0', 'mg', 'Consultation au cabinet par le médecin spécialiste qualifié en médecine générale avec la majoration pour le médecin généraliste (CS+MMG)', 'NGAP', 'tarifParZone:\n  metro: 25\n  971: 29.6\n  972: 29.6\n  973: 29.6\n  974: 29.6\n  976: 29.6', 'euro', 1, '2019-01-01 00:00:00'),
+('STH', '1', '0', 'mcure', 'forfait de surveillance médicale des cures thermales', 'NGAP', 'tarifParZone:\n  metro: 80\n  971: 80\n  972: 80\n  973: 80\n  974: 80\n  976: 80', 'euro', 1, '2019-01-01 00:00:00'),
+('THR', '1', '0', 'mcure', 'forfait 2e orientation de surveillance médicale des cures thermales', 'NGAP', 'tarifParZone:\n  metro: 40\n  971: 40\n  972: 40\n  973: 40\n  974: 40\n  976: 40', 'euro', 1, '2019-01-01 00:00:00');
+
+-- actes
+SET @catID = (SELECT actes_cat.id FROM actes_cat WHERE actes_cat.name='medtheCatRegMedG');
+INSERT IGNORE INTO `actes` (`cat`, `label`, `shortLabel`, `details`, `flagImportant`, `flagCmu`, `fromID`, `toID`, `creationDate`, `active`) VALUES
+(@catID, 'Consultation médecine générale', 'Consultation médecine générale', 'GS:\n  pourcents: 100\n  depassement: 0', '0', '0', 1, '0', '2019-01-01 00:00:00', 'oui');
+
+
+SET @catID = (SELECT actes_cat.id FROM actes_cat WHERE actes_cat.name='medtheCatRegMedther');
+INSERT IGNORE INTO `actes` (`cat`, `label`, `shortLabel`, `details`, `flagImportant`, `flagCmu`, `fromID`, `toID`, `creationDate`, `active`) VALUES
+(@catID, 'Forfait 1 orientation', 'Forfait 1 orientation', 'STH:\n  pourcents: 100\n  depassement: 0', '1', '0', 1, '0', '2019-01-01 00:00:00', 'oui'),
+(@catID, 'Forfait 2 orientations', 'Forfait 2 orientations', 'STH:\n  pourcents: 100\n  depassement: 0\nTHR:\n  pourcents: 100\n  depassement: 0', '1', '0', 1, '0', '2019-01-01 00:00:00', 'oui');
+
 -- data_cat
 INSERT IGNORE INTO `data_cat` (`groupe`, `name`, `label`, `description`, `type`, `fromID`, `creationDate`) VALUES
 ('courrier', 'catModelesCertificats', 'Certificats', 'certificats divers', 'base', '1', '2019-01-01 00:00:00'),
@@ -8,6 +30,7 @@ INSERT IGNORE INTO `data_cat` (`groupe`, `name`, `label`, `description`, `type`,
 ('medical', 'medtheCatCsTher', 'Médecine thermale : consultations 1 2 3 et autre', '', 'base', '1', '2019-01-01 00:00:00'),
 ('medical', 'medtheCatCureActuelle', 'Médecine thermale : données cure actuelle', '', 'base', '1', '2019-01-01 00:00:00'),
 ('medical', 'medtheCatPresSoins', 'Médecine thermale : prescription de soins', '', 'base', '1', '2019-01-01 00:00:00'),
+('reglement', 'porteursReglement', 'Porteurs', 'porteur d\'un règlement', 'base', '1', '2019-01-01 00:00:00'),
 ('typecs', 'csMedTherm', 'Médecine thermale : consultations', 'consultations médecine thermale', 'base', '1', '2019-01-01 00:00:00'),
 ('typecs', 'csMedThermAutres', 'Médecine thermale : autres', '', 'base', '1', '2019-01-01 00:00:00'),
 ('typecs', 'declencheursHorsHistoriques', 'Déclencheurs hors historiques', 'ne donnent pas de ligne dans les historiques', 'base', '1', '2019-01-01 00:00:00');
@@ -260,6 +283,11 @@ INSERT IGNORE INTO `data_types` (`groupe`, `name`, `placeholder`, `label`, `desc
 ('medical', 'medthePresSoinsPulvMembresPreciMinf', '', 'Membres inf.', '', '', '', 'checkbox', '', 'medtherm', @catID, '1', '2019-01-01 00:00:00', '3600', '82'),
 ('medical', 'medthePresSoinsPulvMembresPreciMsup', '', 'Membres sup.', '', '', '', 'checkbox', '', 'medtherm', @catID, '1', '2019-01-01 00:00:00', '3600', '81'),
 ('medical', 'medthePresSoinsPulvMembresPreciUlceres', '', 'Ulcères', '', '', '', 'checkbox', '', 'medtherm', @catID, '1', '2019-01-01 00:00:00', '3600', '83');
+
+
+SET @catID = (SELECT data_cat.id FROM data_cat WHERE data_cat.name='porteursReglement');
+INSERT IGNORE INTO `data_types` (`groupe`, `name`, `placeholder`, `label`, `description`, `validationRules`, `validationErrorMsg`, `formType`, `formValues`, `module`, `cat`, `fromID`, `creationDate`, `durationLife`, `displayOrder`) VALUES
+('reglement', 'medtheReglePorteurS1', '', 'Règlement', 'Règlement conventionné S1', '', '', '', 'baseReglementS1', 'medtherm', @catID, '1', '2019-01-01 00:00:00', '1576800000', '1');
 
 -- configuration
 INSERT IGNORE INTO `configuration` (`name`, `level`, `toID`, `module`, `cat`, `type`, `description`, `value`) VALUES
