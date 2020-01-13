@@ -1,5 +1,6 @@
 -- data_cat
 INSERT IGNORE INTO `data_cat` (`groupe`, `name`, `label`, `description`, `type`, `fromID`, `creationDate`) VALUES
+('courrier', 'catModelesCertificats', 'Certificats', 'certificats divers', 'base', '1', '2019-01-01 00:00:00'),
 ('medical', 'atcd', 'Antécédents et synthèses', 'antécédents et synthèses', 'user', '1', '2019-01-01 00:00:00'),
 ('medical', 'dataBio', 'Données biologiques', 'Données biologiques habituelles', 'user', '1', '2019-01-01 00:00:00'),
 ('medical', 'dataCliniques', 'Données cliniques', 'Données cliniques', 'user', '1', '2019-01-01 00:00:00'),
@@ -23,6 +24,11 @@ INSERT IGNORE INTO `data_types` (`groupe`, `name`, `placeholder`, `label`, `desc
 ('medical', 'medtheAtcdPersoChirugicaux', 'antécédents chirurgicaux personnels', 'Antécédents chirugicaux', 'antécédents chirurgicaux personnels', '', '', 'textarea', '', 'medtherm', @catID, '1', '2019-01-01 00:00:00', '3600', '1'),
 ('medical', 'medtheAtcdPersoMedicaux', 'antécédents médicaux personnels', 'Antécédents médicaux', 'antécédents médicaux personnels', '', '', 'textarea', '', 'medtherm', @catID, '1', '2019-01-01 00:00:00', '3600', '1'),
 ('medical', 'medtheAtcdTraitementChro', 'traitement chronique', 'Traitement chronique', 'traitement chronique', '', '', 'textarea', '', 'medtherm', @catID, '1', '2019-01-01 00:00:00', '3600', '1');
+
+
+SET @catID = (SELECT data_cat.id FROM data_cat WHERE data_cat.name='catModelesCertificats');
+INSERT IGNORE INTO `data_types` (`groupe`, `name`, `placeholder`, `label`, `description`, `validationRules`, `validationErrorMsg`, `formType`, `formValues`, `module`, `cat`, `fromID`, `creationDate`, `durationLife`, `displayOrder`) VALUES
+('courrier', 'medtheCertificatFinAnticipeeCure', '', 'Certificat de fin anticipée de cure', 'certificat de fin anticipée de cure', '', '', '', 'certif-medtheCertificatFinAnticipeeCure', 'medtherm', @catID, '1', '2019-01-01 00:00:00', '3600', '1');
 
 
 SET @catID = (SELECT data_cat.id FROM data_cat WHERE data_cat.name='csMedTherm');
