@@ -87,7 +87,15 @@
         <h1 class="t10">{{ tag.identiteCompleteTitreLongDdn }}</h1>
       </div>
       <div class="t6" style="display: inline-block; width: 48%; border: 1px solid #888; height: 3cm; padding: 3pt; vertical-align: top;">
-        Cachet du médecin thermal
+        <div>Cachet du médecin thermal</div>
+        <div class="t8" style="text-align : center; padding-top: 15pt;">
+            <b>{{ tag.UtilisateurActif_identiteUsuelleTitre	}}</b>
+            {{ tag.UtilisateurActif_etablissementAdressePro }}<br>
+            {{ tag.UtilisateurActif_rueAdressePro }}<br>
+            {{ tag.UtilisateurActif_adresseProLigne2 }}<br>
+            Tél : {{ tag.UtilisateurActif_telPro }}<br>
+            N° : {{ tag.UtilisateurActif_adeli }}
+        </div>
       </div>
 
       <div style="width: 48%;display: inline-block; vertical-align: top; height: 3cm;margin-left: 5pt">
