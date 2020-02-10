@@ -27,10 +27,10 @@
 
 {% set tag = page.courrier %}
 
-<p style="text-align:right">New York, le {{ "now"|date("d/m/Y") }}</p>
+<p style="text-align:right">{{ tag.UtilisateurActif_villeAdressePro }}, le {{ "now"|date("d/m/Y") }}</p>
 <br><br><br>
 
-<p>Je soussigné {{ tag.UtilisateurActif_identiteUsuelleTitre }} certifie que {{	tag.identiteCompleteTitreLongDdn }} a terminé de façon anticipée sa cure thermale le {{ "now"|date("d/m/Y") }}.
+<p>Je soussigné {{ tag.UtilisateurActif_identiteUsuelleTitre }} certifie avoir examiné ce jour {{ tag.identiteCompleteTitreLongDdn }} et déclare que son état de santé nécéssite un arrêt anticipé de sa cure thermale (pour raison médicale), le {{ "now"|date("d/m/Y") }}.</p>
 
 <p>Certificat remis en main propre pour faire valoir ce que de droit.</p>
 
