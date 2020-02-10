@@ -89,12 +89,11 @@
       <div class="t6" style="display: inline-block; width: 48%; border: 1px solid #888; height: 3cm; padding: 3pt; vertical-align: top;">
         <div>Cachet du médecin thermal</div>
         <div class="t8" style="text-align : center; padding-top: 15pt;">
-            <b>{{ tag.UtilisateurActif_identiteUsuelleTitre	}}</b><br>
-            {{ tag.AuteurInitial_adresseProLigne1	 }}<br>
-            {{ tag.UtilisateurActif_rueAdressePro }}<br>
-            {{ tag.UtilisateurActif_adresseProLigne2 }}<br>
-            Tél : {{ tag.UtilisateurActif_telPro }}<br>
-            N° : {{ tag.UtilisateurActif_adeli }}
+            <b>{{ tag.AuteurInitial_identiteUsuelleTitre	}}</b><br>
+            {{ tag.AuteurInitial_adresseProLigne1 }}<br>
+            {{ tag.AuteurInitial_adresseProLigne2 }}<br>
+            Tél : {{ tag.AuteurInitial_telPro }}<br>
+            N° : {{ tag.AuteurInitial_adeli }}
         </div>
       </div>
 
@@ -134,7 +133,7 @@
         <span class="gras">Observations :</span><br>
         {{ tag.medthePresSoinsObservations|nl2br }}
       </p>
-      <p style="font-size: 1.1em">
+      <p style="font-size: 1.2em">
         - 1er RDV médical :
         {{ tag.RendezVousConsultation1 }}<br>
         - 2e RDV médical :
@@ -855,7 +854,7 @@
           </tr>
           <tr>
             <td style="border: 0" colspan="10">Durée des soins définie par le Guide national des Pratiques Médicales Thermales</td>
-            <td style="border: 0">En cas d'absence d'une journée merci de prévenir obligatoirement l'établissement thermal</td>
+            <td style="border: 0; font-size: 1.2em">En cas d'absence d'une journée merci de prévenir obligatoirement l'établissement thermal</td>
           </tr>
         </table>
 
