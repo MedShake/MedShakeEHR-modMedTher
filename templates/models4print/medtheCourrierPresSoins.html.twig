@@ -89,8 +89,8 @@
       <div class="t6" style="display: inline-block; width: 48%; border: 1px solid #888; height: 3cm; padding: 3pt; vertical-align: top;">
         <div>Cachet du médecin thermal</div>
         <div class="t8" style="text-align : center; padding-top: 15pt;">
-            <b>{{ tag.UtilisateurActif_identiteUsuelleTitre	}}</b>
-            {{ tag.UtilisateurActif_etablissementAdressePro }}<br>
+            <b>{{ tag.UtilisateurActif_identiteUsuelleTitre	}}</b><br>
+            {{ tag.AuteurInitial_adresseProLigne1	 }}<br>
             {{ tag.UtilisateurActif_rueAdressePro }}<br>
             {{ tag.UtilisateurActif_adresseProLigne2 }}<br>
             Tél : {{ tag.UtilisateurActif_telPro }}<br>
@@ -134,7 +134,7 @@
         <span class="gras">Observations :</span><br>
         {{ tag.medthePresSoinsObservations|nl2br }}
       </p>
-      <p>
+      <p style="font-size: 1.1em">
         - 1er RDV médical :
         {{ tag.RendezVousConsultation1 }}<br>
         - 2e RDV médical :
