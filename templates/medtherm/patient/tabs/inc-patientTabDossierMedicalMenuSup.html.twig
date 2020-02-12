@@ -27,9 +27,9 @@
 
 <div class="row d-flex justify-content-between">
   <div>
-    {% if config.utiliserLapExterne == 'true' or config.utiliserLap == 'true' %}
+    {% if config.optionGeActiverLapExterne == 'true' or config.utiliserLap == 'true' %}
       <div class="btn-group mr-2">
-        {% if config.utiliserLapExterne == 'true' %}
+        {% if config.optionGeActiverLapExterne == 'true' %}
           <button type="button" class="btn btn-primary openLapExterne" title="Ordonnance médicamenteuse via LAP externe"><i class="fas fa-pills fa-lg fa-fw"></i></button>
         {% elseif config.utiliserLap == 'true' %}
           <button type="button" class="btn btn-primary openLAP" title="Ordonnance médicamenteuse via LAP"><i class="fas fa-pills fa-lg fa-fw"></i></button>
