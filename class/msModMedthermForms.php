@@ -66,7 +66,27 @@ class msModMedthermForms extends msForm
     global $p;
 
     $data = new msData;
-    $name2id = $data->getTypeIDsFromName(['medtheCureActuDateDebut', 'medtheCureActuDateFin', 'medtheCureActuOrientaRhumato', 'medtheCureActuOrientaPhlebo', 'medtheCureActuOrientaGyneco', 'medtheConsultationAutre', 'medtheCsAutreMotif', 'medtheCsAutreExamenGen', 'medtheCsAutreConclusion']);
+    $name2id = $data->getTypeIDsFromName([
+        'medtheCureActuDateDebut',
+        'medtheCureActuDateFin',
+        'medtheCureActuOrientaRhumato',
+        'medtheCureActuOrientaPhlebo',
+        'medtheCureActuOrientaGyneco',
+        'medtheConsultationAutre',
+        'medtheCsAutreMotif',
+        'medtheCsAutreExamenGen',
+        'medtheCsAutreConclusion',
+        'allergies',
+        'medtheAtcdPersoMedicaux',
+        'medtheAtcdPersoChirugicaux',
+        'medtheAtcdTraitementChro',
+        'medtheAtcdDivers',
+        'insuffisanceRenale',
+        'creatinineMicroMolL',
+        'insuffisanceHepatique',
+        'grossesseActuelle',
+        'allaitementActuel',
+    ]);
 
     // data cure actuelle
     $cureActu = new msForm;
@@ -189,6 +209,16 @@ class msModMedthermForms extends msForm
     if(isset($soinsOut)) $preval['medtheCouMtSoins'] = $soinsOut;
 
     /*
+     * Données des antécédents
+     */
+    $atcdForm = new msForm;
+    $atcdForm->setFormIDbyName('medthermATCD');
+    $atcdDatas = $atcdForm->getPrevaluesForPatient($_POST['patientID']);
+    foreach($name2id as $k=>$v) {
+        if (! empty($atcdDatas[$v])) $preval[$k] = $atcdDatas[$v];
+    }
+
+    /*
      * Ajout des consulation autres
      */
 
@@ -204,6 +234,10 @@ class msModMedthermForms extends msForm
 
     $csAutreData = "";
     foreach($autesConsult as $consult) {
+        if (empty($consult['date'])) {
+            $csAutreData = "\nAucune autre consultation.";
+            break;
+        }
         $csAutreData .= "\n\n-----\n\n";
         $csAutreData .= "Date : ".DateTime::createFromFormat('Y-m-d H:i:s', $consult['date'])->format('d/m/Y')."\n\n";
         $csAutreData .= "\nMotif : ".$consult['motif']."\n";
