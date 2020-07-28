@@ -204,6 +204,10 @@ class msModMedthermForms extends msForm
 
     $csAutreData = "";
     foreach($autesConsult as $consult) {
+        if (empty($consult['date'])) {
+            $csAutreData = "\nAucune autre consultation.";
+            break;
+        }
         $csAutreData .= "\n\n-----\n\n";
         $csAutreData .= "Date : ".DateTime::createFromFormat('Y-m-d H:i:s', $consult['date'])->format('d/m/Y')."\n\n";
         $csAutreData .= "\nMotif : ".$consult['motif']."\n";
