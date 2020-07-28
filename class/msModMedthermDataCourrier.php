@@ -31,7 +31,8 @@
  * Module médecine thermale
  *
  *
- * @author Bertrand Boutillier <b.boutillier@gmail.com>
+ * @author           Bertrand Boutillier <b.boutillier@gmail.com>
+ * @contrb 2020      Maxime   DEMAREST   <maxime@indelog.fr>
  */
 
 class msModMedthermDataCourrier
@@ -47,8 +48,14 @@ class msModMedthermDataCourrier
       global $p;
       if(msTools::validateDate($d['medtheCureActuDateDebut'], 'd/m/Y') and msTools::validateDate($d['medtheCureActuDateFin'], 'd/m/Y')) {
         $ag = new msAgenda;
+        // Ajout du nonbre de jours avant la cure ou les consultation doivent y être intégrés
+        if (!empty($p['config']['agendaNbJourAvantDebutCureInclureConsult']) && is_numeric($p['config']['agendaNbJourAvantDebutCureInclureConsult']) && $p['config']['agendaNbJourAvantDebutCureInclureConsult'] > 0) {
+            $startDate = DateTime::createFromFormat('d/m/Y', $d['medtheCureActuDateDebut'])->sub(DateInterval::createFromDateString($p['config']['agendaNbJourAvantDebutCureInclureConsult'].' day'))->format('d/m/Y');
+        } else {
+            $startDate = $d['medtheCureActuDateDebut'];
+        }
         $ag->set_patientID($d['patientID']);
-        $ag->setStartDate(msTools::dateConverter($d['medtheCureActuDateDebut'], 'd/m/Y', 'Y-m-d 00:00:00'));
+        $ag->setStartDate(msTools::dateConverter($startDate, 'd/m/Y', 'Y-m-d 00:00:00'));
         $ag->setEndDate(msTools::dateConverter($d['medtheCureActuDateFin'], 'd/m/Y', 'Y-m-d 23:59:59'));
         if(isset($p['config']['agendaTypesRdvClefModuleMedThermale']) and !empty($p['config']['agendaTypesRdvClefModuleMedThermale'])) {
           $rdvClefMedTherm = explode(',', $p['config']['agendaTypesRdvClefModuleMedThermale']);
@@ -63,6 +70,32 @@ class msModMedthermDataCourrier
           }
         }
      }
+    }
+
+    /**
+     * Ajout de données du dossier patient dans les data courrier
+     * @param  array $d tableau des tags
+     * @return void
+     */
+    public static function getCourrierDataCompleteModuleModele_medtheResumeDossierPatient(&$d) {
+        global $p;
+        $ms_courrier = new msCourrier();
+        // Chope les données des antécédents
+        $atcd = $ms_courrier->getExamenData($d['patientID'], 'medthermATCD', 0);
+        if (!empty($atcd) && is_array($atcd)) {
+            $d = array_merge($d, $atcd);
+        }
+        // Ajoute aussi les données de taile et de poids du patient (basé sur le dernière consultation)
+        $ms_data = new msData;
+        $name2typeID=$ms_data->getTypeIDsFromName(['poids', 'taillePatient']);
+        $d['poids'] = msSQL::sql2tab("SELECT dt.name, od.value, od.registerDate AS date FROM objets_data AS od
+                                    LEFT JOIN data_types AS dt ON od.typeID=dt.id AND od.toID='".$d['id']."' and deleted=''
+                                    WHERE dt.groupe='medical' AND od.typeID = '".$name2typeID['poids']."' AND od.value != ''
+                                    ORDER BY od.registerDate ASC LIMIT 1")[0]['value'];
+        $d['taillePatient'] = msSQL::sql2tab("SELECT dt.name, od.value, od.registerDate AS date FROM objets_data AS od
+                                    LEFT JOIN data_types AS dt ON od.typeID=dt.id AND od.toID='".$d['id']."' and deleted=''
+                                    WHERE dt.groupe='medical' AND od.typeID = '".$name2typeID['taillePatient']."' AND od.value != ''
+                                    ORDER BY od.registerDate ASC LIMIT 1")[0]['value'];
     }
 
 }

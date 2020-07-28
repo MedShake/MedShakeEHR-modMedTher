@@ -22,7 +22,8 @@
 /##
  # Template > models4print : courrier de synthèse de fin de cure thermale
  #
- # @author Bertrand Boutillier <b.boutillier@gmail.com>
+ # @author           Bertrand Boutillier <b.boutillier@gmail.com>
+ # @contrb 2020      Maxime   DEMAREST   <maxime@indelog.fr>
  #}
 
 {% set tag = page.courrier %}
@@ -77,3 +78,6 @@ Circonférences aux membres inférieurs :
 
 <h3>Observations</h3>
 <p>{{ tag.medtheCouMtObservation|nl2br }}</p>
+
+<h3>Consultation autres durant la cure</h3>
+<p><pre>{{ tag.medtheCouMtResumCsAut|nl2br}}</pre></p>

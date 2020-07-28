@@ -23,7 +23,8 @@
 /**
  * Méthodes spécifiques aux formulaires du module Médecine Thermale
  *
- * @author Bertrand Boutillier <b.boutillier@gmail.com>
+ * @author           Bertrand Boutillier <b.boutillier@gmail.com>
+ * @contrb 2020      Maxime   DEMAREST   <maxime@indelog.fr>
  */
 
 
@@ -65,7 +66,7 @@ class msModMedthermForms extends msForm
     global $p;
 
     $data = new msData;
-    $name2id = $data->getTypeIDsFromName(['medtheCureActuDateDebut', 'medtheCureActuDateFin', 'medtheCureActuOrientaRhumato', 'medtheCureActuOrientaPhlebo', 'medtheCureActuOrientaGyneco']);
+    $name2id = $data->getTypeIDsFromName(['medtheCureActuDateDebut', 'medtheCureActuDateFin', 'medtheCureActuOrientaRhumato', 'medtheCureActuOrientaPhlebo', 'medtheCureActuOrientaGyneco', 'medtheConsultationAutre', 'medtheCsAutreMotif', 'medtheCsAutreExamenGen', 'medtheCsAutreConclusion']);
 
     // data cure actuelle
     $cureActu = new msForm;
@@ -96,19 +97,19 @@ class msModMedthermForms extends msForm
     $cs3 = $obj->getLastObjetByTypeName('medtheConsultationTher3', $_POST['parentID']);
 
     $observation='';
-    if(is_numeric($cs1['id'])) {
+    if(is_array($cs1) && is_numeric($cs1['id'])) {
       $obj->setObjetID($cs1['id']);
       $cs1data=$obj->getObjetAndSons('name');
       $observation .= "1re consultation :\n".$cs1data['medtheCs1ExamenGen']['value'];
     }
 
-    if(is_numeric($cs2['id'])) {
+    if(is_array($cs2) && is_numeric($cs2['id'])) {
       $obj->setObjetID($cs2['id']);
       $cs2data=$obj->getObjetAndSons('name');
       $observation .= "\n2e consultation :\n".$cs2data['medtheCs2ExamenGen']['value'];
     }
 
-    if(is_numeric($cs3['id'])) {
+    if(is_array($cs3) && is_numeric($cs3['id'])) {
       $obj->setObjetID($cs3['id']);
       $cs3data=$obj->getObjetAndSons('name');
       $observation .= "\n3e consultation :\n".$cs3data['medtheCs3ExamenGen']['value'];
@@ -163,6 +164,7 @@ class msModMedthermForms extends msForm
       }
     }
 
+    // Ajout des données des consulation thermales
     if(isset($orientations)) $preval['medtheCouMtOrientations'] = $orientations;
     if(isset($cureActu[$name2id['medtheCureActuDateDebut']])) $preval['medtheCouMtDateDebut'] = $cureActu[$name2id['medtheCureActuDateDebut']];
     if(isset($cureActu[$name2id['medtheCureActuDateFin']])) $preval['medtheCouMtDateFin'] = $cureActu[$name2id['medtheCureActuDateFin']];
@@ -186,9 +188,30 @@ class msModMedthermForms extends msForm
     if(isset($observation)) $preval['medtheCouMtObservation'] = $observation;
     if(isset($soinsOut)) $preval['medtheCouMtSoins'] = $soinsOut;
 
+    /*
+     * Ajout des consulation autres
+     */
+
+    $autesConsult = msSQL::sql2tab("
+            SELECT cs.creationDate AS date, motif.value AS motif, exam.value As examen,  conclu.value AS conclusion
+            FROM objets_data AS cure
+            LEFT JOIN objets_data AS cs ON cs.instance = cure.id and cs.typeId = ".$name2id['medtheConsultationAutre']."
+            LEFT JOIN objets_data AS motif ON motif.instance = cs.id and motif.typeId = ".$name2id['medtheCsAutreMotif']."
+            LEFT JOIN objets_data AS exam ON exam.instance = cs.id and exam.typeId = ".$name2id['medtheCsAutreExamenGen']."
+            LEFT JOIN objets_data AS conclu ON conclu.instance = cs.id and conclu.typeId = ".$name2id['medtheCsAutreConclusion']."
+            WHERE cure.id = ".$_POST['parentID']."
+            ORDER BY cs.creationDate DESC");
+
+    $csAutreData = "";
+    foreach($autesConsult as $consult) {
+        $csAutreData .= "\n\n-----\n\n";
+        $csAutreData .= "Date : ".DateTime::createFromFormat('Y-m-d H:i:s', $consult['date'])->format('d/m/Y')."\n\n";
+        $csAutreData .= "\nMotif : ".$consult['motif']."\n";
+        $csAutreData .= "\nExamen :\n\n\t".str_replace("\n", "\t", $consult['examen'])."\n";
+        $csAutreData .= "\nConclusion : ".$consult['conclusion'];
+    }
+    $preval['medtheCouMtResumCsAut'] = $csAutreData;
+
     $this->setPrevaluesAfterwards($p['page']['form'], $preval);
-
   }
-
-
 }
