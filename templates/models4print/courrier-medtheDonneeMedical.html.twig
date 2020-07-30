@@ -56,6 +56,12 @@ Cher Confrère,
   {% if tag.insuffisanceHepatique is not empty %}
   <li>Insuffisance hépatique  : {{ tag.insuffisanceHepatique }}</li>
   {% endif %}
+  {% if tag.grossesseActuelle == 'true' %}
+  <li>Grossesse en cours</li>
+  {% endif %}
+  {% if tag.allaitementActuel == 'true' %}
+  <li>Allaitement</li>
+  {% endif %}
 </ul>
 
 {% if tag.allergies is not empty %}
