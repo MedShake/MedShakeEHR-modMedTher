@@ -229,7 +229,7 @@ class msModMedthermForms extends msForm
             LEFT JOIN objets_data AS motif ON motif.instance = cs.id and motif.typeId = ".$name2id['medtheCsAutreMotif']."
             LEFT JOIN objets_data AS exam ON exam.instance = cs.id and exam.typeId = ".$name2id['medtheCsAutreExamenGen']."
             LEFT JOIN objets_data AS conclu ON conclu.instance = cs.id and conclu.typeId = ".$name2id['medtheCsAutreConclusion']."
-            WHERE cure.id = ".$_POST['parentID']."
+            WHERE cure.id = ".msSQL::cleanVar($_POST['parentID'])."
             ORDER BY cs.creationDate DESC");
 
     $csAutreData = "";
@@ -239,7 +239,7 @@ class msModMedthermForms extends msForm
             break;
         }
         $csAutreData .= "\n\n-----\n\n";
-        $csAutreData .= "Date : ".DateTime::createFromFormat('Y-m-d H:i:s', $consult['date'])->format('d/m/Y')."\n\n";
+        $csAutreData .= "Date : ".DateTime::createFromFormat('Y-m-d H:i:s', $consult['date'])->format('d/m/Y')."\n";
         $csAutreData .= "\nMotif : ".$consult['motif']."\n";
         $csAutreData .= "\nExamen :\n\n\t".str_replace("\n", "\t", $consult['examen'])."\n";
         $csAutreData .= "\nConclusion : ".$consult['conclusion'];
