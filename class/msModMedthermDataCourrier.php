@@ -88,14 +88,10 @@ class msModMedthermDataCourrier
         // Ajoute aussi les données de taile et de poids du patient (basé sur le dernière consultation)
         $ms_data = new msData;
         $name2typeID=$ms_data->getTypeIDsFromName(['poids', 'taillePatient']);
-        $d['poids'] = msSQL::sql2tab("SELECT dt.name, od.value, od.registerDate AS date FROM objets_data AS od
-                                    LEFT JOIN data_types AS dt ON od.typeID=dt.id AND od.toID='".$d['id']."' and deleted=''
-                                    WHERE dt.groupe='medical' AND od.typeID = '".$name2typeID['poids']."' AND od.value != ''
-                                    ORDER BY od.registerDate ASC LIMIT 1")[0]['value'];
-        $d['taillePatient'] = msSQL::sql2tab("SELECT dt.name, od.value, od.registerDate AS date FROM objets_data AS od
-                                    LEFT JOIN data_types AS dt ON od.typeID=dt.id AND od.toID='".$d['id']."' and deleted=''
-                                    WHERE dt.groupe='medical' AND od.typeID = '".$name2typeID['taillePatient']."' AND od.value != ''
-                                    ORDER BY od.registerDate ASC LIMIT 1")[0]['value'];
+        $msObjet = new msObjet;
+        $msObjet->setToID($d['id']);
+        $d['poids'] = $msObjet->getLastObjetValueByTypeName('poids');
+        $d['taillePatient'] = $msObjet->getLastObjetValueByTypeName('taillePatient');
     }
 
 }
