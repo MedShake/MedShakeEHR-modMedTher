@@ -76,16 +76,6 @@ class msModMedthermForms extends msForm
         'medtheCsAutreMotif',
         'medtheCsAutreExamenGen',
         'medtheCsAutreConclusion',
-        'allergies',
-        'medtheAtcdPersoMedicaux',
-        'medtheAtcdPersoChirugicaux',
-        'medtheAtcdTraitementChro',
-        'medtheAtcdDivers',
-        'insuffisanceRenale',
-        'creatinineMicroMolL',
-        'insuffisanceHepatique',
-        'grossesseActuelle',
-        'allaitementActuel',
     ]);
 
     // data cure actuelle
@@ -211,11 +201,10 @@ class msModMedthermForms extends msForm
     /*
      * Données des antécédents
      */
-    $atcdForm = new msForm;
-    $atcdForm->setFormIDbyName('medthermATCD');
-    $atcdDatas = $atcdForm->getPrevaluesForPatient($_POST['patientID']);
-    foreach($name2id as $k=>$v) {
-        if (! empty($atcdDatas[$v])) $preval[$k] = $atcdDatas[$v];
+    // Chope les données des antécédents
+    $atcdDatas = msCourrier::getExamenData($_POST['patientID'], 'medthermATCD', 0);
+    if (!empty($atcdDatas) && is_array($atcdDatas)) {
+        $preval = array_merge($preval, $atcdDatas);
     }
 
     /*
