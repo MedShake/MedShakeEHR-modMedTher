@@ -16,4 +16,6 @@ UPDATE forms set printModel = 'medtheCsAutre' WHERE internalName = 'medtheFormCs
 -- Ajout d'un formulaire de résumé des consultation autres pour les courrier de synthèse de cure
 SET @catID = (SELECT data_cat.id FROM data_cat WHERE data_cat.name='medtheCatCourrierMT');
 INSERT IGNORE INTO `data_types` (`groupe`, `name`, `placeholder`, `label`, `description`, `validationRules`, `validationErrorMsg`, `formType`, `formValues`, `module`, `cat`, `fromID`, `creationDate`, `durationLife`, `displayOrder`) VALUES
+('medical', 'medtheCouMtAvecCsAutres', '', 'Inclure les consultations autres', 'Inclus au courrier de synthèse les consultations autres', '', '', 'switch', 'false', 'medtherm', @catID, '1', '2019-01-01 00:00:00', '3600', '1'),
+('medical', 'medtheCouMtAvecDonneMedical', '', 'Inclure les données médicales', 'Ajoute les données médicales aux courrier de syntèse', '', '', 'switch', 'false', 'medtherm', @catID, '1', '2019-01-01 00:00:00', '3600', '1'),
 ('medical', 'medtheCouMtResumCsAut', '', 'Resumé des consultations autres', 'Résumé des consultation autres effectuées pendant la cure', '', '', 'textarea', '', 'medtherm', @catID, '1', '2020-07-28 00:00:00', '3600', '1');

@@ -79,59 +79,63 @@ Circonférences aux membres inférieurs :
 <h3>Observations</h3>
 <p>{{ tag.medtheCouMtObservation|nl2br }}</p>
 
-<h3>Antécédents généraux</h3>
+{% if tag.medtheCouMtAvecDonneMedical  == "true" %}
+  <h3>Antécédents généraux</h3>
 
-{% if tag.allergies is not empty %}
-<h4>Allegie</h4>
-<p>{{ tag.allergies }}</p>
-{% endif %}
-
-{% if tag.medtheAtcdPersoMedicaux is not empty %}
-<h4>Antécédents médicaux </h4>
-<p>{{ tag.medtheAtcdPersoMedicaux | nl2br }}</p>
-{% endif %}
-
-{% if tag.medtheAtcdPersoChirugicaux is not empty %}
-<h4>Antécédents chirugicaux </h4>
-<p>{{ tag.medtheAtcdPersoChirugicaux | nl2br }}</p>
-{% endif %}
-
-{% if tag.medtheAtcdTraitementChro is not empty %}
-<h4>Traitement chronique</h4>
-<p>{{ tag.medtheAtcdTraitementChro | nl2br }}</p>
-{% endif %}
-
-{% if tag.medtheAtcdDivers is not empty %}
-<h4>Divers</h4>
-<p>{{ tag.medtheAtcdDivers }}</p>
-{% endif %}
-
-{% if tag.insuffisanceRenale is not empty %}
-  <h4>Insuffisance rénale</h4>
-  <p>{{ tag.insuffisanceRenale }}</p>
-{% endif %}
-
-{% if tag.creatinineMicroMolL is not empty %}
-<h4>Créatinine </h4>
-<p>{{ tag.creatinineMicroMolL }} µmol/L</p>
-{% endif %}
-
-{% if tag.insuffisanceHepatique is not empty %}
-<h4>Insuffisance hépatique </h4>
-<p>{{ tag.insuffisanceHepatique }}</p>
-{% endif %}
-
-{% if tag.grossesseActuelle == 'true' or tag.allaitementActuel == 'true' %}
-<h4>Autres</h4>
-<ul>
-  {% if tag.grossesseActuelle == 'true' %}
-    <li>Grossesse en cours</li>
+  {% if tag.allergies is not empty %}
+  <h4>Allegie</h4>
+  <p>{{ tag.allergies }}</p>
   {% endif %}
-  {% if tag.allaitementActuel == 'true' %}
-    <li>Allaitement</li>
+
+  {% if tag.medtheAtcdPersoMedicaux is not empty %}
+  <h4>Antécédents médicaux </h4>
+  <p>{{ tag.medtheAtcdPersoMedicaux | nl2br }}</p>
   {% endif %}
-</ul>
+
+  {% if tag.medtheAtcdPersoChirugicaux is not empty %}
+  <h4>Antécédents chirugicaux </h4>
+  <p>{{ tag.medtheAtcdPersoChirugicaux | nl2br }}</p>
+  {% endif %}
+
+  {% if tag.medtheAtcdTraitementChro is not empty %}
+  <h4>Traitement chronique</h4>
+  <p>{{ tag.medtheAtcdTraitementChro | nl2br }}</p>
+  {% endif %}
+
+  {% if tag.medtheAtcdDivers is not empty %}
+  <h4>Divers</h4>
+  <p>{{ tag.medtheAtcdDivers }}</p>
+  {% endif %}
+
+  {% if tag.insuffisanceRenale is not empty %}
+    <h4>Insuffisance rénale</h4>
+    <p>{{ tag.insuffisanceRenale }}</p>
+  {% endif %}
+
+  {% if tag.creatinineMicroMolL is not empty %}
+  <h4>Créatinine </h4>
+  <p>{{ tag.creatinineMicroMolL }} µmol/L</p>
+  {% endif %}
+
+  {% if tag.insuffisanceHepatique is not empty %}
+  <h4>Insuffisance hépatique </h4>
+  <p>{{ tag.insuffisanceHepatique }}</p>
+  {% endif %}
+
+  {% if tag.grossesseActuelle == 'true' or tag.allaitementActuel == 'true' %}
+  <h4>Autres</h4>
+  <ul>
+    {% if tag.grossesseActuelle == 'true' %}
+      <li>Grossesse en cours</li>
+    {% endif %}
+    {% if tag.allaitementActuel == 'true' %}
+      <li>Allaitement</li>
+    {% endif %}
+  </ul>
+  {% endif %}
 {% endif %}
 
-<h3>Consultation autres durant la cure</h3>
-<p><pre>{{ tag.medtheCouMtResumCsAut|nl2br}}</pre></p>
+{% if tag.medtheCouMtAvecCsAutres == "true" %}
+  <h3>Consultation autres durant la cure</h3>
+  <p><pre>{{ tag.medtheCouMtResumCsAut|nl2br}}</pre></p>
+{% endif %}
