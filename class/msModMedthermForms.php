@@ -76,6 +76,8 @@ class msModMedthermForms extends msForm
         'medtheCsAutreMotif',
         'medtheCsAutreExamenGen',
         'medtheCsAutreConclusion',
+		'allaitementActuel',
+		'grossesseActuelle',
     ]);
 
     // data cure actuelle
@@ -206,12 +208,20 @@ class msModMedthermForms extends msForm
     if (!empty($atcdDatas) && is_array($atcdDatas)) {
         $preval = array_merge($preval, $atcdDatas);
     }
+	$patient = new msPeople();
+	$patient->setToID($_POST['patientID']);
+    $patientAdminDatas = $patient->getAdministrativesDatas();
+	$patientAge = $patient->getAgeFormats();
+	if($patientAdminDatas['administrativeGenderCode']['value'] == 'M' or $patientAge['ageTotalYears'] > 50 ) {
+		$this->removeFieldFromForm($p['page']['form'], 'allaitementActuel');
+		$this->removeFieldFromForm($p['page']['form'], 'grossesseActuelle');
+	}
 
     /*
      * Ajout des consulation autres
      */
 
-    $autesConsult = msSQL::sql2tab("
+    $autresConsult = msSQL::sql2tab("
             SELECT cs.creationDate AS date, motif.value AS motif, exam.value As examen,  conclu.value AS conclusion
             FROM objets_data AS cure
             LEFT JOIN objets_data AS cs ON cs.instance = cure.id and cs.typeId = ".$name2id['medtheConsultationAutre']."
@@ -221,17 +231,21 @@ class msModMedthermForms extends msForm
             WHERE cure.id = ".msSQL::cleanVar($_POST['parentID'])."
             ORDER BY cs.creationDate DESC");
 
+
+	// Pour fonctionner avec tynymce doit commencer avec une ligne vide
     $csAutreData = "";
-    foreach($autesConsult as $consult) {
+    foreach($autresConsult as $consult) {
         if (empty($consult['date'])) {
-            $csAutreData = "\nAucune autre consultation.";
+            $csAutreData = "<p>Aucune autre consultation.</p>";
             break;
         }
-        $csAutreData .= "\n\n-----\n\n";
-        $csAutreData .= "Date : ".DateTime::createFromFormat('Y-m-d H:i:s', $consult['date'])->format('d/m/Y')."\n";
-        $csAutreData .= "\nMotif : ".$consult['motif']."\n";
-        $csAutreData .= "\nExamen :\n\n\t".str_replace("\n", "\t", $consult['examen'])."\n";
-        $csAutreData .= "\nConclusion : ".$consult['conclusion'];
+        $csAutreData .= "<h4><u>Le &nbsp;".DateTime::createFromFormat('Y-m-d H:i:s', $consult['date'])->format('d/m/Y')."</u></h4>";
+		if (!empty($consult['motif']))
+			$csAutreData .= "<p><strong>Motif :</strong>&nbsp;".$consult['motif']."</p>";
+		if (!empty($consult['examen']))
+			$csAutreData .= "<p><strong>Examen :</strong><br/><br/>".nl2br($consult['examen'])."</p>";
+		if (!empty($consult['conclusion']))
+			$csAutreData .= "<p><strong>Conclusion :&nbsp;</strong>".$consult['conclusion']."</p>";
     }
     $preval['medtheCouMtResumCsAut'] = $csAutreData;
 
