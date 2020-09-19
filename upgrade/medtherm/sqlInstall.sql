@@ -109,7 +109,7 @@ INSERT IGNORE INTO `data_types` (`groupe`, `name`, `placeholder`, `label`, `desc
 ('medical', 'medtheCouMtDateFin', '', 'Date de fin', '', '', '', 'text', '', 'base', @catID, '1', '2019-01-01 00:00:00', '3600', '1'),
 ('medical', 'medtheCouMtImcFinal', '', 'IMC Final', 'IMC à la dérnière consultation thérmal', '', '', 'text', '', 'base', @catID, '1', '2019-01-01 00:00:00', '3600', '10'),
 ('medical', 'medtheCouMtImcInitial', '', 'IMC Initial', 'IMC de la première consulation thérmal', '', '', 'text', '', 'medtherm', @catID, '1', '2019-01-01 00:00:00', '3600', '10'),
-('medical', 'medtheCouMtObservation', '', 'Observation', '', '', '', 'textarea', '', 'base', @catID, '1', '2019-01-01 00:00:00', '3600', '1'),
+('medical', 'medtheCouMtObservation', '', 'Consultations', '', '', '', 'textarea', '', 'base', @catID, '1', '2019-01-01 00:00:00', '3600', '1'),
 ('medical', 'medtheCouMtOrientations', '', 'Orientations', '', '', '', 'text', '', 'base', @catID, '1', '2019-01-01 00:00:00', '3600', '1'),
 ('medical', 'medtheCouMtPathoAlgies', '', 'Pathologies et algies', '', '', '', 'textarea', '', 'base', @catID, '1', '2019-01-01 00:00:00', '3600', '1'),
 ('medical', 'medtheCouMtPoidsFinal', '', 'Poids final', '', '', '', 'text', '', 'base', @catID, '1', '2019-01-01 00:00:00', '3600', '1'),
