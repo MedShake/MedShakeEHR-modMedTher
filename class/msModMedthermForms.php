@@ -76,8 +76,8 @@ class msModMedthermForms extends msForm
         'medtheCsAutreMotif',
         'medtheCsAutreExamenGen',
         'medtheCsAutreConclusion',
-		'allaitementActuel',
-		'grossesseActuelle',
+	'allaitementActuel',
+	'grossesseActuelle',
     ]);
 
     // data cure actuelle
@@ -182,6 +182,7 @@ class msModMedthermForms extends msForm
     if(isset($cureActu[$name2id['medtheCureActuDateFin']])) $preval['medtheCouMtDateFin'] = $cureActu[$name2id['medtheCureActuDateFin']];
     if(isset($cs1data['taillePatient']['value'])) $preval['medtheCouMtTaille'] = $cs1data['taillePatient']['value'];
     if(isset($cs1data['poids']['value'])) $preval['medtheCouMtPoidsInitial'] = $cs1data['poids']['value'];
+    if(isset($cs1data['imc']['value'])) $preval['medtheCouMtImcInitial'] = $cs1data['imc']['value'];
     if(isset($cs1data['taSystolique']['value'])) $preval['medtheCouMtTASC1'] = $cs1data['taSystolique']['value'];
     if(isset($cs1data['taDiastolique']['value'])) $preval['medtheCouMtTADC1'] = $cs1data['taDiastolique']['value'];
     if(isset($cs1data['medtheCs1CircoMolletG']['value'])) $preval['medtheCouMtCs1CircoMolletG'] = $cs1data['medtheCs1CircoMolletG']['value'];
@@ -191,6 +192,7 @@ class msModMedthermForms extends msForm
     if(isset($cs2data['taSystolique']['value'])) $preval['medtheCouMtTASC2'] = $cs2data['taSystolique']['value'];
     if(isset($cs2data['taDiastolique']['value'])) $preval['medtheCouMtTADC2'] = $cs2data['taDiastolique']['value'];
     if(isset($cs3data['poids']['value'])) $preval['medtheCouMtPoidsFinal'] = $cs3data['poids']['value'];
+    if(isset($cs3data['imc']['value'])) $preval['medtheCouMtImcFinal'] = $cs3data['imc']['value'];
     if(isset($cs3data['taSystolique']['value'])) $preval['medtheCouMtTASC3'] = $cs3data['taSystolique']['value'];
     if(isset($cs3data['taDiastolique']['value'])) $preval['medtheCouMtTADC3'] = $cs3data['taDiastolique']['value'];
     if(isset($cs3data['medtheCs3CircoMolletG']['value'])) $preval['medtheCouMtCs3CircoMolletG'] = $cs3data['medtheCs3CircoMolletG']['value'];
