@@ -41,7 +41,7 @@ Orientation{% if ',' in tag.medtheCouMtOrientations %}s{% endif %} : {{ tag.medt
 <h3>Éléments cliniques</h3>
 
 <p>
-Taille : {{ tag.medtheCouMtTaille }} cm - Poids initial : {{ tag.medtheCouMtPoidsInitial }} kg - Poids final : {{ tag.medtheCouMtPoidsFinal }} kg<br>
+Taille : {{ tag.medtheCouMtTaille }} cm - Poids initial : {{ tag.medtheCouMtPoidsInitial }} kg - Poids final : {{ tag.medtheCouMtPoidsFinal }} kg - IMC Initial : {{ tag.medtheCouMtImcFinal }} kg/m² - IMC Final : {{ tag.medtheCouMtImcInitial }} kg/m²<br>
 </p>
 
 <p>
@@ -76,7 +76,7 @@ Circonférences aux membres inférieurs :
 <h3>Soins</h3>
 <p>{{ tag.medtheCouMtSoins|nl2br }}</p>
 
-<h3>Observations</h3>
+<h3>Consultations</h3>
 <p>{{ tag.medtheCouMtObservation|nl2br }}</p>
 
 {% if tag.medtheCouMtAvecDonneMedical  == "true" %}

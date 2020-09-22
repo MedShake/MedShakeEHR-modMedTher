@@ -405,7 +405,7 @@
           <td class="centrer">3</td>
           <td style="width: 20pt; border-top: 0; border-bottom: 0;">&nbsp;</td>
           <td>
-            {% if tag.val_medthePresSoinsDoucheGenJetPreciPosi == "coucheDebout" %}Couché + debout{% elseif tag.val_medthePresSoinsDoucheGenJetPreciPosi == "couche" %}Couché{% elseif tag.val_medthePresSoinsDoucheGenJetPreciPosi == "debout" %}Debout{% elseif tag.val_medthePresSoinsDoucheGenJetPreciPosi == "assis" %}Assis{% endif %}
+  {% if tag.val_medthePresSoinsDoucheGenJetPreciPosi == "coucheDebout" %}Couché + debout{% elseif tag.val_medthePresSoinsDoucheGenJetPreciPosi == "couche" %}Couché{% elseif tag.val_medthePresSoinsDoucheGenJetPreciPosi == "debout" %}Debout{% elseif tag.val_medthePresSoinsDoucheGenJetPreciPosi == "assis" %}Assis{% endif %}{%if tag.medtheDoucheGenJetPreciAvecBaveuse == "true"%}&nbsp;avec baveuse{% endif %}
           </td>
         </tr>
         <tr class="border">
@@ -821,8 +821,9 @@
                 <span class="cbox">&#9746;</span>
               {% else %}
                 <span class="cbox">&#9744;</span>{% endif %}
-              &nbsp;&nbsp;&nbsp;<br>
-              {% if tag.medthePresSoinsMassageSsEauKinePreciZones is not empty %}{{ tag.medthePresSoinsMassageSsEauKinePreciZones }}
+		{% if tag.medthePresSoinsMassageSsEauKinePreciZones is not empty %}&nbsp;&nbsp;&nbsp;<strong>Zone : </strong>{{ tag.medthePresSoinsMassageSsEauKinePreciZones }}
+              {% endif %}
+	      {% if tag.medthePresSoinsMassageSsEauKineAutresSiPasDispo is not empty %}&nbsp;&nbsp;&nbsp;<strong>Autres soins si pas de dispo : </strong>{{ tag.medthePresSoinsMassageSsEauKineAutresSiPasDispo }}
               {% endif %}
             </td>
           </tr>
