@@ -32,4 +32,4 @@ $patient->setToID($match['params']['patientID']);
 $patient->createNewObjetByTypeName('medtheFinCure', '', $match['params']['objetID']);
 
 
-msTools::redirection('/patient/'.$match['params']['patientID'].'/');
+msTools::redirection('/patient/' . $match['params']['patientID'] . '/');

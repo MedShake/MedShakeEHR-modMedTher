@@ -29,26 +29,25 @@
 
 class msModMedthermSqlGenerate extends msSqlGenerate
 {
-  private $_defautConfigValues = [
-    'agendaTypesRdvClefModuleMedThermale'=>'',
-  ];
+	private $_defautConfigValues = [
+		'agendaTypesRdvClefModuleMedThermale' => '',
+	];
 
-  protected function _getSpecifSql() {
+	protected function _getSpecifSql()
+	{
 
-    // param de config
-    if($configurations=msSQL::sql2tab("select * from $this->_bdd.configuration where module in ('medtherm') and level='default'")) {
-      foreach($configurations as $configuration) {
-        unset($configuration['id']);
-        if(isset($this->_defautConfigValues[$configuration['name']])) {
-          $configuration['value']=$this->_defautConfigValues[$configuration['name']];
-        } else {
-          $configuration['value']='';
-        }
-        if(!isset($this->_configuration_fields)) $this->_configuration_fields=$this->_getSqlFieldsPart($configuration);
-        $this->_configuration_values[]=$this->_getSqlValuesPart($configuration);
-      }
-
-    }
-
-  }
+		// param de config
+		if ($configurations = msSQL::sql2tab("select * from $this->_bdd.configuration where module in ('medtherm') and level='default'")) {
+			foreach ($configurations as $configuration) {
+				unset($configuration['id']);
+				if (isset($this->_defautConfigValues[$configuration['name']])) {
+					$configuration['value'] = $this->_defautConfigValues[$configuration['name']];
+				} else {
+					$configuration['value'] = '';
+				}
+				if (!isset($this->_configuration_fields)) $this->_configuration_fields = $this->_getSqlFieldsPart($configuration);
+				$this->_configuration_values[] = $this->_getSqlValuesPart($configuration);
+			}
+		}
+	}
 }

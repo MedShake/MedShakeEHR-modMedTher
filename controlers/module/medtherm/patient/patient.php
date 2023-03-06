@@ -31,36 +31,38 @@
 include('actions/inc-ajax-refreshLatColPatientAtcdData.php');
 
 //chercher la dernière cure
-$dataSearch=new msData;
-$name2typeID = $dataSearch->getTypeIDsFromName(['medtheNouvelleCure', 'medtheFinCure']);
-if ($findGro=msSQL::sqlUnique("select pd.id as idGro, eg.id as idFin
+$dataSearch = new msData;
+$marqueurs = $dataSearch->getTypeIDsFromName(['medtheNouvelleCure', 'medtheFinCure']);
+$marqueurs['patientID'] = $p['page']['patient']['id'];
+
+if ($findGro = msSQL::sqlUnique("SELECT pd.id as idGro, eg.id as idFin
   from objets_data as pd
-  left join objets_data as eg on pd.id=eg.instance and eg.typeID='".$name2typeID['medtheFinCure']."' and eg.outdated='' and eg.deleted=''
-  where pd.toID='".$p['page']['patient']['id']."' and pd.typeID='".$name2typeID['medtheNouvelleCure']."' and pd.outdated='' and pd.deleted='' order by pd.creationDate desc
-  limit 1")) {
-    if (!$findGro['idFin']) {
-        $p['page']['cureEnCours']['id']=$findGro['idGro'];
+  left join objets_data as eg on pd.id=eg.instance and eg.typeID = :medtheFinCure and eg.outdated='' and eg.deleted=''
+  where pd.toID = :patientID and pd.typeID = :medtheNouvelleCure and pd.outdated='' and pd.deleted='' order by pd.creationDate desc
+  limit 1", $marqueurs)) {
+	if (!$findGro['idFin']) {
+		$p['page']['cureEnCours']['id'] = $findGro['idGro'];
 
-        // générer le formulaire cure tête de page.
-        $formSyntheseCure = new msForm();
-        $formSyntheseCure->setFormIDbyName('medtheCureEnCours');
-        $formSyntheseCure->setInstance($p['page']['cureEnCours']['id']);
-        $formSyntheseCure->getPrevaluesForPatient($p['page']['patient']['id']);
-        $p['page']['formMedtheCureEnCours']=$formSyntheseCure->getForm();
-        $p['page']['formJavascript']['medtheCureEnCours']=$formSyntheseCure->getFormJavascript();
+		// générer le formulaire cure tête de page.
+		$formSyntheseCure = new msForm();
+		$formSyntheseCure->setFormIDbyName('medtheCureEnCours');
+		$formSyntheseCure->setInstance($p['page']['cureEnCours']['id']);
+		$formSyntheseCure->getPrevaluesForPatient($p['page']['patient']['id']);
+		$p['page']['formMedtheCureEnCours'] = $formSyntheseCure->getForm();
+		$p['page']['formJavascript']['medtheCureEnCours'] = $formSyntheseCure->getFormJavascript();
 
-        //types de consultation
-        $typeCsMT=new msData;
-        $p['page']['csMedTherm']=$typeCsMT->getDataTypesFromCatName('csMedTherm', array('id','label','formValues'));
-        $p['page']['csMedThermAutres']=$typeCsMT->getDataTypesFromCatName('csMedThermAutres', array('id','label','formValues'));
-    }
+		//types de consultation
+		$typeCsMT = new msData;
+		$p['page']['csMedTherm'] = $typeCsMT->getDataTypesFromCatName('csMedTherm', array('id', 'label', 'formValues'));
+		$p['page']['csMedThermAutres'] = $typeCsMT->getDataTypesFromCatName('csMedThermAutres', array('id', 'label', 'formValues'));
+	}
 }
 
 //fixer les paramètres pour les formulaires d'ordonnance
-$data=new msData;
-$ordos=$data->getDataTypesFromCatName('porteursOrdo', array('id', 'module', 'label', 'description', 'formValues'));
+$data = new msData;
+$ordos = $data->getDataTypesFromCatName('porteursOrdo', array('id', 'module', 'label', 'description', 'formValues'));
 foreach ($ordos as $v) {
-    if ($v['module']=='base') {
-      $p['page']['formOrdo'][]=$v;
-    }
+	if ($v['module'] == 'base') {
+		$p['page']['formOrdo'][] = $v;
+	}
 }

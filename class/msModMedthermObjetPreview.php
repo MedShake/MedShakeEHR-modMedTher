@@ -32,81 +32,85 @@
 class msModMedthermObjetPreview extends msModBaseObjetPreview
 {
 
-/**
- * Obtenir la preview d'une cs thermale 1
- * @return string HTML
- */
-  public function getPreviewmedtheConsultationTher1() {
-    global $p;
+	/**
+	 * Obtenir la preview d'une cs thermale 1
+	 * @return string HTML
+	 */
+	public function getPreviewmedtheConsultationTher1()
+	{
+		global $p;
 
-    $data = new msObjet();
-    $data->setObjetID($this->_objetID);
-    $p['page']['dataPre'] = $data->getObjetAndSons('name');
+		$data = new msObjet();
+		$data->setObjetID($this->_objetID);
+		$p['page']['dataPre'] = $data->getObjetAndSons('name');
 
-    $html = new msGetHtml;
-    $html->set_template('inc-ajax-medtheConsultationTher1.html.twig');
-    $html = $html->genererHtmlVar($p);
-    return $html;
-  }
+		$html = new msGetHtml;
+		$html->set_template('inc-ajax-medtheConsultationTher1.html.twig');
+		$html = $html->genererHtmlVar($p);
+		return $html;
+	}
 
-/**
- * Obtenir la preview d'une cs thermale 2
- * @return string HTML
- */
-  public function getPreviewmedtheConsultationTher2() {
-    global $p;
+	/**
+	 * Obtenir la preview d'une cs thermale 2
+	 * @return string HTML
+	 */
+	public function getPreviewmedtheConsultationTher2()
+	{
+		global $p;
 
-    $data = new msObjet();
-    $data->setObjetID($this->_objetID);
-    $p['page']['dataPre'] = $data->getObjetAndSons('name');
+		$data = new msObjet();
+		$data->setObjetID($this->_objetID);
+		$p['page']['dataPre'] = $data->getObjetAndSons('name');
 
-    $html = new msGetHtml;
-    $html->set_template('inc-ajax-medtheConsultationTher2.html.twig');
-    $html = $html->genererHtmlVar($p);
-    return $html;
-  }
+		$html = new msGetHtml;
+		$html->set_template('inc-ajax-medtheConsultationTher2.html.twig');
+		$html = $html->genererHtmlVar($p);
+		return $html;
+	}
 
-/**
- * Obtenir la preview d'une cs thermale 3
- * @return string HTML
- */
-  public function getPreviewmedtheConsultationTher3() {
-    global $p;
+	/**
+	 * Obtenir la preview d'une cs thermale 3
+	 * @return string HTML
+	 */
+	public function getPreviewmedtheConsultationTher3()
+	{
+		global $p;
 
-    $data = new msObjet();
-    $data->setObjetID($this->_objetID);
-    $p['page']['dataPre'] = $data->getObjetAndSons('name');
+		$data = new msObjet();
+		$data->setObjetID($this->_objetID);
+		$p['page']['dataPre'] = $data->getObjetAndSons('name');
 
-    $html = new msGetHtml;
-    $html->set_template('inc-ajax-medtheConsultationTher3.html.twig');
-    $html = $html->genererHtmlVar($p);
-    return $html;
-  }
+		$html = new msGetHtml;
+		$html->set_template('inc-ajax-medtheConsultationTher3.html.twig');
+		$html = $html->genererHtmlVar($p);
+		return $html;
+	}
 
-/**
- * Obtenir la preview d'une cs autre
- * @return string HTML
- */
-  public function getPreviewmedtheConsultationAutre() {
-    global $p;
+	/**
+	 * Obtenir la preview d'une cs autre
+	 * @return string HTML
+	 */
+	public function getPreviewmedtheConsultationAutre()
+	{
+		global $p;
 
-    $data = new msObjet();
-    $data->setObjetID($this->_objetID);
-    $p['page']['dataPre'] = $data->getObjetAndSons('name');
+		$data = new msObjet();
+		$data->setObjetID($this->_objetID);
+		$p['page']['dataPre'] = $data->getObjetAndSons('name');
 
-    $html = new msGetHtml;
-    $html->set_template('inc-ajax-medtheConsultationAutre.html.twig');
-    $html = $html->genererHtmlVar($p);
-    return $html;
-  }
+		$html = new msGetHtml;
+		$html->set_template('inc-ajax-medtheConsultationAutre.html.twig');
+		$html = $html->genererHtmlVar($p);
+		return $html;
+	}
 
-/**
- * Obtenir la preview d'une prescription de soins
- * @return string HTML
- */
-  public function getPreviewmedtheConsultationPrescripSoins() {
+	/**
+	 * Obtenir la preview d'une prescription de soins
+	 * @return string HTML
+	 */
+	public function getPreviewmedtheConsultationPrescripSoins()
+	{
 
-    return $this->getGenericPreviewPDF();
-  }
-
+		return $this->getGenericPreviewPDF();
+	}
 }

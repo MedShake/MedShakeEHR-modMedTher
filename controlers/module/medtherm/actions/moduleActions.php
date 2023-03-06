@@ -29,16 +29,16 @@
 
 
 //$debug='';
-$m=$match['params']['m'];
+$m = $match['params']['m'];
 
-$acceptedModes=array(
-    'installNewCure', // déclencher nouvelle cure
-    'closeCure' //fermer cure
+$acceptedModes = array(
+	'installNewCure', // déclencher nouvelle cure
+	'closeCure' //fermer cure
 );
 
 //inclusion
-if(in_array($m, $acceptedModes) and is_file($p['homepath'].'controlers/module/medtherm/actions/inc-action-'.$m.'.php')) {
-    include('inc-action-'.$m.'.php');
+if (in_array($m, $acceptedModes) and is_file($p['homepath'] . 'controlers/module/medtherm/actions/inc-action-' . $m . '.php')) {
+	include('inc-action-' . $m . '.php');
 } else {
-    die();
+	die();
 }
